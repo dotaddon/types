@@ -701,9 +701,9 @@ declare interface CBodyComponent {
 }
 
 /**
- * The type used for validation of custom events.
+ * 用于验证自定义事件的类型。
  *
- * This type may be augmented via interface merging.
+ * 这种类型可以通过界面合并进行扩充。
  */
 interface CustomGameEventDeclarations {}
 
@@ -753,9 +753,9 @@ declare interface CCustomGameEventManager {
 }
 
 /**
- * The type used for validation of custom net tables.
+ * 用于验证自定义网络表的类型。
  *
- * This type may be augmented via interface merging.
+ * 这种类型可以通过界面合并进行扩充。
  */
 interface CustomNetTableDeclarations {}
 
@@ -5828,8 +5828,7 @@ declare interface CDOTABaseAbility extends CBaseEntity {
     GetAutoCastState(): boolean;
     GetBackswingTime(): number;
     /**
-     * Always returns Uint64 at runtime, DOTA_ABILITY_BEHAVIOR is referenced only for
-     * compatibility.
+     * 运行时始终返回 Uint64，引用 DOTA_ABILITY_BEHAVIOR 只是为了兼容性。
      */
     GetBehavior(): DOTA_ABILITY_BEHAVIOR | Uint64;
     /**
@@ -9499,11 +9498,11 @@ declare function DropNeutralItemAtPositionForHero(
 declare function Dynamic_Wrap<
     T extends object,
     K extends {
-        [P in keyof T]: ((...args: any[]) => any) extends T[P] // At least one of union's values is a function
-            ? [T[P]] extends [((this: infer TThis, ...args: any[]) => any) | null | undefined] // Box type to make it not distributive
-                ? {} extends TThis // Has no specified this
+        [P in keyof T]: ((...args: any[]) => any) extends T[P] // union的值 至少有一个函数
+            ? [T[P]] extends [((this: infer TThis, ...args: any[]) => any) | null | undefined] // 盒子类型，使其不分布
+                ? {} extends TThis // 没有指定这个
                     ? P
-                    : TThis extends T // Has this specified as T
+                    : TThis extends T // 是否将此指定为 T
                     ? P
                     : never
                 : never

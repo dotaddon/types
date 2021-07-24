@@ -1,5 +1,5 @@
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type SteamUgcQuery = SteamUGCQuery;
 
@@ -26,7 +26,7 @@ declare enum SteamUGCQuery {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type SteamUgcMatchingUgcType = SteamUGCMatchingUGCType;
 
@@ -56,7 +56,7 @@ declare enum SteamUniverse {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type GameState = DOTA_GameState;
 
@@ -77,7 +77,7 @@ declare enum DOTA_GameState {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type GcTeam = DOTA_GC_TEAM;
 
@@ -91,7 +91,7 @@ declare enum DOTA_GC_TEAM {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type ConnectionState = DOTAConnectionState_t;
 
@@ -106,7 +106,7 @@ declare enum DOTAConnectionState_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type UnitOrder = dotaunitorder_t;
 
@@ -154,7 +154,7 @@ declare enum dotaunitorder_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type OverheadAlert = DOTA_OVERHEAD_ALERT;
 
@@ -187,7 +187,7 @@ declare enum DOTA_OVERHEAD_ALERT {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type HeroPickState = DOTA_HeroPickState;
 
@@ -258,7 +258,7 @@ declare enum DOTA_HeroPickState {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type DotaTeam = DOTATeam_t;
 
@@ -283,7 +283,7 @@ declare enum DOTATeam_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type RuneType = DOTA_RUNES;
 
@@ -301,7 +301,7 @@ declare enum DOTA_RUNES {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type UnitTargetTeam = DOTA_UNIT_TARGET_TEAM;
 
@@ -314,7 +314,7 @@ declare enum DOTA_UNIT_TARGET_TEAM {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type UnitTargetType = DOTA_UNIT_TARGET_TYPE;
 
@@ -332,7 +332,7 @@ declare enum DOTA_UNIT_TARGET_TYPE {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type UnitTargetFlags = DOTA_UNIT_TARGET_FLAGS;
 
@@ -396,7 +396,7 @@ declare enum DOTALimits_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type InventoryFlags = DOTAInventoryFlags_t;
 
@@ -411,7 +411,7 @@ declare enum DOTAInventoryFlags_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type ModifyGoldReason = EDOTA_ModifyGold_Reason;
 
@@ -441,7 +441,7 @@ declare enum EDOTA_ModifyGold_Reason {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type UnitAttackCapability = DOTAUnitAttackCapability_t;
 
@@ -454,7 +454,7 @@ declare enum DOTAUnitAttackCapability_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type UnitMoveCapability = DOTAUnitMoveCapability_t;
 
@@ -465,7 +465,7 @@ declare enum DOTAUnitMoveCapability_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type ItemShareability = EShareAbility;
 
@@ -476,7 +476,7 @@ declare enum EShareAbility {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type MusicStatus = DOTAMusicStatus_t;
 
@@ -490,7 +490,7 @@ declare enum DOTAMusicStatus_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type AbilityBehavior = DOTA_ABILITY_BEHAVIOR;
 
@@ -538,7 +538,7 @@ declare enum DOTA_ABILITY_BEHAVIOR {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type DamageTypes = DAMAGE_TYPES;
 
@@ -553,7 +553,7 @@ declare enum DAMAGE_TYPES {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type AbilityTypes = ABILITY_TYPES;
 
@@ -565,7 +565,7 @@ declare enum ABILITY_TYPES {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type SpellImmunityTypes = SPELL_IMMUNITY_TYPES;
 
@@ -579,7 +579,7 @@ declare enum SPELL_IMMUNITY_TYPES {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type DamageFlag = DOTADamageFlag_t;
 
@@ -606,7 +606,7 @@ declare enum DOTADamageFlag_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type ModifyXpReason = EDOTA_ModifyXP_Reason;
 
@@ -621,7 +621,7 @@ declare enum EDOTA_ModifyXP_Reason {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type GameActivity = GameActivity_t;
 
@@ -890,7 +890,7 @@ declare enum GameActivity_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type MinimapEventType = DOTAMinimapEvent_t;
 
@@ -912,7 +912,7 @@ declare enum DOTAMinimapEvent_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type LoadoutType = DOTASlotType_t;
 
@@ -1013,7 +1013,7 @@ declare enum DOTASlotType_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type ModifierFunction = modifierfunction;
 
@@ -2033,7 +2033,7 @@ declare enum modifierfunction {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type ModifierState = modifierstate;
 
@@ -2092,7 +2092,7 @@ declare enum modifierstate {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type ModifierAttribute = DOTAModifierAttribute_t;
 
@@ -2114,7 +2114,7 @@ declare enum Attributes {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type ParticleAttachment = ParticleAttachment_t;
 
@@ -2140,7 +2140,7 @@ declare enum ParticleAttachment_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type MotionControllerPriority = DOTA_MOTION_CONTROLLER_PRIORITY;
 
@@ -2153,7 +2153,7 @@ declare enum DOTA_MOTION_CONTROLLER_PRIORITY {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type SpeechType = DOTASpeechType_t;
 
@@ -2172,7 +2172,7 @@ declare enum DOTASpeechType_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type AbilitySpeakTrigger = DOTAAbilitySpeakTrigger_t;
 
@@ -2182,7 +2182,7 @@ declare enum DOTAAbilitySpeakTrigger_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type CustomUiType = DotaCustomUIType_t;
 
@@ -2200,7 +2200,7 @@ declare enum DotaCustomUIType_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type DefaultUiElement = DotaDefaultUIElement_t;
 
@@ -2240,7 +2240,7 @@ declare enum DotaDefaultUIElement_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type PlayerUltimateStateOrTime = PlayerUltimateStateOrTime_t;
 
@@ -2252,7 +2252,7 @@ declare enum PlayerUltimateStateOrTime_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type PlayerOrderIssuer = PlayerOrderIssuer_t;
 
@@ -2264,7 +2264,7 @@ declare enum PlayerOrderIssuer_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type OrderQueueBehavior = OrderQueueBehavior_t;
 
@@ -2275,7 +2275,7 @@ declare enum OrderQueueBehavior_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type ClickBehaviors = CLICK_BEHAVIORS;
 
@@ -2296,7 +2296,7 @@ declare enum CLICK_BEHAVIORS {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type AbilityLearnResult = AbilityLearnResult_t;
 
@@ -2309,7 +2309,7 @@ declare enum AbilityLearnResult_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type KeybindCommand = DOTAKeybindCommand_t;
 
@@ -2554,7 +2554,7 @@ declare enum DOTAKeybindCommand_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type ShopType = DOTA_SHOP_TYPE;
 
