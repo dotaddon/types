@@ -13,10 +13,10 @@ const precedingDeclarations: Record<string, string> = {
 
   CCustomGameEventManager: `
     /**
-      * The type used for validation of custom events.
-      *
-      * This type may be augmented via interface merging.
-      */
+     * 用于验证自定义事件的类型。
+     *
+     * 这种类型可以通过界面合并进行扩充。
+     */ 
     interface CustomGameEventDeclarations {}
 
     declare namespace CCustomGameEventManager {
@@ -30,10 +30,10 @@ const precedingDeclarations: Record<string, string> = {
 
   CCustomNetTableManager: `
     /**
-      * The type used for validation of custom net tables.
-      *
-      * This type may be augmented via interface merging.
-      */
+     * 用于验证自定义网络表的类型。
+     *
+     * 这种类型可以通过界面合并进行扩充。
+     */
     interface CustomNetTableDeclarations {}
   `,
 };

@@ -63,10 +63,10 @@ export function generateEnumDeclarations(
       );
 
       if (declaration.name !== normalizedEnumName && normalizedMembers.length > 0) {
-        const aliasKind = normalize ? 'Non-normalized' : 'Normalized';
+        const aliasKind = normalize ? '不规范的' : '规范的';
         const aliasName = normalize ? declaration.name : normalizedEnumName;
         const aliasType = normalize ? normalizedEnumName : declaration.name;
-        const description = `@deprecated ${aliasKind} enum name. Defined only for library compatibility.`;
+        const description = `@deprecated ${aliasKind}枚举名称。仅为库兼容性而定义。`;
         declarations.push(withDescription(`type ${aliasName} = ${aliasType}`, description));
       }
 
