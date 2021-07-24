@@ -1,5 +1,5 @@
 /** @noSelfInFile */
-// @validateApiUsageDefault server
+// @validateApiUsageDefault server 服务端
 
 declare const CBaseAnimating: DotaConstructor<CBaseAnimating>;
 
@@ -2379,7 +2379,7 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
      */
     Kill(ability: CDOTABaseAbility | undefined, attacker: CDOTA_BaseNPC | undefined): void;
     /**
-     * @deprecated Added for compatibility with CBaseEntity. Invalid at the runtime.
+     * @deprecated 添加以与 CBaseEntity 兼容。 运行时无效。
      */
     Kill(): never;
     MakeIllusion(): void;
@@ -5567,7 +5567,7 @@ declare interface CDOTA_PlayerResource extends CBaseEntity {
     GetStuns(playerId: PlayerID): number;
     GetTeam(playerId: PlayerID): DOTATeam_t;
     /**
-     * @deprecated Added for compatibility with CBaseEntity. Invalid at the runtime.
+     * @deprecated 添加以与 CBaseEntity 兼容。 运行时无效。
      */
     GetTeam(): never;
     GetTeamKills(team: DOTATeam_t): number;
@@ -8048,7 +8048,7 @@ declare interface CLogicRelay extends CBaseEntity {
      */
     Trigger(activator: CBaseEntity | undefined, caller: CBaseEntity | undefined): void;
     /**
-     * @deprecated Added for compatibility with CBaseEntity. Invalid at the runtime.
+     * @deprecated 添加以与 CBaseEntity 兼容。 运行时无效。
      */
     Trigger(): never;
     __kind__: 'instance';
