@@ -25,7 +25,7 @@ interface PanoramaPanelNameMap {
     ProgressBarWithMiddle: ProgressBarWithMiddle;
 
     DOTAUserName: UserName;
-    DOTAUserRichPresence: UserRichPresence;
+    DOTAUserRichPresence: UserName;
     DOTAAvatarImage: AvatarImage;
 
     Countdown: CountdownPanel;
@@ -33,31 +33,62 @@ interface PanoramaPanelNameMap {
     Button: Button;
     TextButton: TextButton;
     ToggleButton: ToggleButton;
-    DOTASettingsCheckbox: SettingsCheckbox;
+    DOTASettingsCheckbox: ToggleButton;
     RadioButton: RadioButton;
 
     TextEntry: TextEntry;
-    DOTAHUDShopTextEntry: HUDShopTextEntry;
+    DOTAHUDShopTextEntry: TextEntry;
     NumberEntry: NumberEntry;
     Slider: SliderPanel;
-    SlottedSlider: SlottedSlider;
+    SlottedSlider: SliderPanel;
 
     DropDown: DropDown;
     ContextMenuScript: ContextMenuScriptPanel;
 
     Carousel: CarouselPanel;
-    DOTAHeroSetList: HeroSetList;
+    DOTAHeroSetList: CarouselPanel;
     CarouselNav: Panel;
 
     DOTAHUDOverlayMap: HUDOverlayMap;
     DOTAMinimap: Panel;
 
-    HTML: HTML;
-    DOTAAccountLinkHTML: AccountLinkHTML;
+    HTML: HTMLPanel;
+    DOTAAccountLinkHTML: HTMLPanel;
     DOTAHTMLPanel: HTMLPanel;
-    DOTAStoreCustomControls: StoreCustomControls;
+    DOTAStoreCustomControls: HTMLPanel;
 
     CustomLayoutPanel: Panel;
+
+    TabButton: Panel
+    TabContents: Panel
+    /** 英雄介绍页面 */
+    DOTAHeroInspect: Panel
+    /** 战斗事件 */
+    DOTACombatEvents: Panel
+    /** 雷达图 */
+    DOTASpiderGraph: Panel
+    /** 属性表 */
+    DOTAStatsRegion: Panel
+    /** 三维表 */
+    DOTAHUDStrAgiInt: Panel
+    /** 快速购买 */
+    DOTAQuickBuy: Panel
+    /** 物品栏 */
+    DOTAInventory: Panel
+    /** 储藏室 */
+    DOTAStash: Panel
+    /** 经验圈 */
+    DOTAXP: Panel
+    /** 肖像画 */
+    DOTAPortrait: Panel
+    /** 死亡状态 */
+    DOTAHUDDeathPanel: Panel
+    /** BUFF栏 */
+    DOTABuffList: Panel
+    /** 天赋树图形 */
+    DOTAHudTalentDisplay: Panel
+    /** 天赋树弹出 */
+    DOTAStatBranch: Panel
 }
 
 // from https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Panorama/Events#Default_Event_Attributes
@@ -358,13 +389,11 @@ interface TextButton extends Panel {
     text: string;
 }
 
-type SettingsCheckbox = ToggleButton;
 interface ToggleButton extends Panel {
     text: string;
     SetSelected(value: boolean): void;
 }
 
-type HUDShopTextEntry = TextEntry;
 interface TextEntry extends Panel {
     text: string;
 
@@ -403,7 +432,6 @@ interface DropDown extends Panel {
     FindDropDownMenuChild(string: string): Panel;
 }
 
-type SlottedSlider = SliderPanel;
 interface SliderPanel extends PanelBase {
     value: number;
     min: number;
@@ -442,7 +470,6 @@ interface ProgressBarWithMiddle extends Panel {
     max: number;
 }
 
-type UserRichPresence = UserName;
 interface UserName extends Panel {
     /**
      * 64-bit Steam ID number.
@@ -493,16 +520,12 @@ interface HeroMovie extends Panel {
     persona: any; // ??
 }
 
-type HTML = HTMLPanel;
-type AccountLinkHTML = HTMLPanel;
-type StoreCustomControls = HTMLPanel;
 interface HTMLPanel extends Panel {
     SetURL(url: string): void;
     SetIgnoreCursor(value: boolean): void;
     RunJavascript(js: string): void;
 }
 
-type HeroSetList = CarouselPanel;
 interface CarouselPanel extends Panel {
     GetFocusIndex(): number;
     GetFocusChild(): Panel;
