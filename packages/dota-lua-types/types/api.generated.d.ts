@@ -1653,11 +1653,11 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
     /**
      * Add a modifier to this unit.
      */
-    AddNewModifier(
+    AddNewModifier<T extends modifierTable>(
         caster: CDOTA_BaseNPC | undefined,
         ability: CDOTABaseAbility | undefined,
         modifierName: string,
-        modifierTable: object | undefined,
+        modifierTable: T,
     ): CDOTA_Buff;
     /**
      * Adds the no draw flag.

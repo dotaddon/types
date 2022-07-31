@@ -28,3 +28,13 @@ type DotaConstructor<T extends object> = {
 };
 
 type __NumberLike = number & Record<Exclude<keyof number, 'toString'>, never>;
+
+interface modifierTable {
+    index?:number
+    length?:number
+    type?:number
+    name?:number
+    parent?:number
+    creation?:number
+    duration?: number
+}
