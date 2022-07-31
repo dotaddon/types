@@ -38,24 +38,7 @@ const precedingDeclarations: Record<string, string> = {
   `,
 };
 
-export const generatedApi = emit(
-  api.flatMap((declaration) => {
-    const typeName = declaration.name;
-
-    const declarations: (dom.TopLevelDeclaration | string)[] = [];
-    if (typeName in precedingDeclarations) {
-      declarations.push(precedingDeclarations[typeName]);
-    }
-
-    if (declaration.kind === 'function') {
-      declarations.push(
-        ...getFunction((p, r) => dom.create.function(typeName, p, r), typeName, declaration),
-      );
-
-      return declarations;
-    }
-
-    const mainDeclarationMembers = [...declaration.members].flatMap<dom.ObjectTypeMember>(
+const getMembers = (typeName:string, members:api.ClassMember[]) => [...members].flatMap<dom.ObjectTypeMember>(
       (member) => {
         const fullName = `${typeName}.${member.name}`;
 
@@ -84,9 +67,33 @@ export const generatedApi = emit(
       },
     );
 
-    mainDeclarationMembers.push(
-      dom.create.property('__kind__', dom.type.stringLiteral('instance')),
-    );
+    // let qqq = true;
+
+export const generatedApi = emit(
+  api.flatMap((declaration) => {
+    const typeName = declaration.name;
+
+    const declarations: (dom.TopLevelDeclaration | string)[] = [];
+    if (typeName in precedingDeclarations) {
+      declarations.push(precedingDeclarations[typeName]);
+    }
+
+    if (declaration.kind === 'function') {
+      declarations.push(
+        ...getFunction((p, r) => dom.create.function(typeName, p, r), typeName, declaration),
+      );
+
+      
+    // if(qqq){
+    //   qqq = false;
+    //   console.log(
+    //     typeName,'\n111\n',declaration,'\n222\n',
+    //     declarations[declarations.length-1]
+    //   )
+    // }
+
+      return declarations;
+    }
 
     const constructorTypes = dom.create.intersection([]);
     if (typeName !== declaration.instance) {
@@ -126,6 +133,12 @@ export const generatedApi = emit(
         ),
       );
     }
+
+    const mainDeclarationMembers = getMembers(typeName, declaration.members);
+
+    mainDeclarationMembers.push(
+      dom.create.property('__kind__', dom.type.stringLiteral('instance')),
+    );
 
     const extendedType =
       declaration.extend != null ? dom.create.interface(declaration.extend) : undefined;
