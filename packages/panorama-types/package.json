@@ -1,5 +1,5 @@
 {
-  "name": "@moddota/panorama-types",
+  "name": "@cabin-icarus/panorama-types",
   "version": "1.19.0",
   "description": "TypeScript definitions for Dota 2 Panorama API",
   "keywords": [
@@ -8,9 +8,9 @@
     "types",
     "typescript"
   ],
-  "homepage": "https://github.com/ModDota/TypeScriptDeclarations#readme",
-  "bugs": "https://github.com/ModDota/TypeScriptDeclarations/issues",
-  "repository": "https://github.com/ModDota/TypeScriptDeclarations/tree/master/packages/panorama-types",
+  "homepage": "https://github.com/CabinIkaros/TypeScriptDeclarations#readme",
+  "bugs": "https://github.com/CabinIkaros/TypeScriptDeclarations/issues",
+  "repository": "https://github.com/CabinIkaros/TypeScriptDeclarations/tree/master/packages/panorama-types",
   "license": "MIT",
   "author": "ark120202",
   "files": [
