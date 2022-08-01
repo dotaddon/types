@@ -9,7 +9,6 @@ jobs:
         with:
           node-version: '14.x'
           registry-url: 'https://registry.npmjs.org'
-          scope: '@moddota'
       - run: yarn --frozen-lockfile
       - run: yarn build
       - run: yarn publish packages/panorama-types --access public
