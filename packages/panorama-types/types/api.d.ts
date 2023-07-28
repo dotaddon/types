@@ -1079,6 +1079,11 @@ interface CScriptBindingPR_Entities {
      * Get the item contained in this physical item container.
      */
     GetContainedItem(nEntityIndex: EntityIndex): ItemEntityIndex;
+
+    /**
+     * Set the minimap icon on this client
+     */
+    SetMinimapIcon(nEntityIndex: EntityIndex, icon:string);
 }
 
 interface CScriptBindingPR_Abilities {

@@ -8,9 +8,9 @@
     "types",
     "typescript"
   ],
-  "homepage": "https://github.com/ModDota/TypeScriptDeclarations#readme",
-  "bugs": "https://github.com/ModDota/TypeScriptDeclarations/issues",
-  "repository": "https://github.com/ModDota/TypeScriptDeclarations/tree/master/packages/panorama-types",
+  "homepage": "https://github.com/CabinIkaros/TypeScriptDeclarations#readme",
+  "bugs": "https://github.com/CabinIkaros/TypeScriptDeclarations/issues",
+  "repository": "https://github.com/CabinIkaros/TypeScriptDeclarations/tree/master/packages/panorama-types",
   "license": "MIT",
   "author": "ark120202",
   "files": [
