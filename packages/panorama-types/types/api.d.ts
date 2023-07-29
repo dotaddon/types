@@ -1083,7 +1083,7 @@ interface CScriptBindingPR_Entities {
     /**
      * Set the minimap icon on this client
      */
-    SetMinimapIcon(nEntityIndex: EntityIndex, icon:string);
+    SetMinimapIcon(nEntityIndex: EntityIndex, icon:string): void;
 }
 
 interface CScriptBindingPR_Abilities {
