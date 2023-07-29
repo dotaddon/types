@@ -102,7 +102,7 @@ declare enum Attributes {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type ClickBehaviors = CLICK_BEHAVIORS;
 
@@ -541,7 +541,7 @@ declare enum DOTA_INVALID_ORDERS {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type MotionControllerPriority = DOTA_MOTION_CONTROLLER_PRIORITY;
 
@@ -995,7 +995,7 @@ declare enum DOTAPostGameColumn_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type PostGameLayout = DOTAPostGameLayout_t;
 
@@ -1009,7 +1009,7 @@ declare enum DOTAPostGameLayout_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type ProjectileAttachment = DOTAProjectileAttachment_t;
 

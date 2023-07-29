@@ -84,7 +84,7 @@ declare const enum Attributes {
 }
 
 /**
- * @deprecated Non-normalized enum name. Defined only for library compatibility.
+ * @deprecated 不规范的枚举名称。仅为库兼容性而定义。
  */
 type CLICK_BEHAVIORS = ClickBehaviors;
 
@@ -497,7 +497,7 @@ declare const enum InvalidOrders {
 }
 
 /**
- * @deprecated Non-normalized enum name. Defined only for library compatibility.
+ * @deprecated 不规范的枚举名称。仅为库兼容性而定义。
  */
 type DOTA_MOTION_CONTROLLER_PRIORITY = MotionControllerPriority;
 
@@ -887,7 +887,7 @@ declare const enum MusicStatus {
 }
 
 /**
- * @deprecated Non-normalized enum name. Defined only for library compatibility.
+ * @deprecated 不规范的枚举名称。仅为库兼容性而定义。
  */
 type DOTAPostGameColumn_t = PostGameColumn;
 
@@ -906,7 +906,7 @@ declare const enum PostGameColumn {
 }
 
 /**
- * @deprecated Non-normalized enum name. Defined only for library compatibility.
+ * @deprecated 不规范的枚举名称。仅为库兼容性而定义。
  */
 type DOTAPostGameLayout_t = PostGameLayout;
 

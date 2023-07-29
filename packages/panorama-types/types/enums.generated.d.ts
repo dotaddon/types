@@ -101,7 +101,7 @@ declare enum DOTA_GC_TEAM {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type GameMode = DOTA_GameMode;
 
