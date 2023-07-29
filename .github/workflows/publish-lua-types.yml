@@ -7,16 +7,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org'
-          scope: '@moddota'
-      - run: npm ci
-      - run: npm run build
-      - run: npm publish
+          scope: '@mobilc'
+          cache: 'pnpm'
+      - run: pnpm ci
+      - run: pnpm build
+      - run: pnpm publish
         working-directory: packages/dota-lua-types
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTOMATION_TOKEN }}
