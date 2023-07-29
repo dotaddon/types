@@ -1,5 +1,5 @@
 /** @noSelfInFile */
-// @validateApiUsageDefault server
+// @validateApiUsageDefault server 服务端
 
 declare type CombatAnalyzerQueryID = number & {
     readonly __tag__: 'CombatAnalyzerQueryID';

@@ -23,7 +23,7 @@ export const overrides: Record<string, ApiOverride> = {
   'CDOTABaseAbility.GetBehavior': {
     return: 'DOTA_ABILITY_BEHAVIOR | Uint64',
     description:
-      'Always returns Uint64 at runtime, DOTA_ABILITY_BEHAVIOR is referenced only for compatibility.',
+      '运行时始终返回 Uint64，引用 DOTA_ABILITY_BEHAVIOR 只是为了兼容性。',
   },
   'CDOTA_Ability_Lua.GetBehavior': { return: 'DOTA_ABILITY_BEHAVIOR | Uint64' },
   'CDOTA_Item_Lua.GetBehavior': { return: 'DOTA_ABILITY_BEHAVIOR | Uint64' },
@@ -43,11 +43,11 @@ export const overrides: Record<string, ApiOverride> = {
       {
         name: 'K',
         extend: `{
-            [P in keyof T]: ((...args: any[]) => any) extends T[P] // At least one of union's values is a function
-                ? [T[P]] extends [((this: infer TThis, ...args: any[]) => any) | null | undefined] // Box type to make it not distributive
-                    ? {} extends TThis // Has no specified this
+            [P in keyof T]: ((...args: any[]) => any) extends T[P] // union的值 至少有一个函数
+                ? [T[P]] extends [((this: infer TThis, ...args: any[]) => any) | null | undefined] // 盒子类型，使其不分布
+                    ? {} extends TThis // 没有指定这个
                         ? P
-                        : TThis extends T // Has this specified as T
+                        : TThis extends T // 是否将此指定为 T
                         ? P
                         : never
                     : never

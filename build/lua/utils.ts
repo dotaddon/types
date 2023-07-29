@@ -180,7 +180,7 @@ export function getFunction<T extends CallableDeclaration>(
   if (compatibilityOverloads.has(identifier)) {
     const compatibilityFn = createType([], dom.create.namedTypeReference('never'));
     compatibilityFn.jsDocComment =
-      '@deprecated Added for compatibility with CBaseEntity. Invalid at the runtime.';
+      '@deprecated 添加以与 CBaseEntity 兼容。 运行时无效。';
     declarations.push(compatibilityFn);
   }
 
@@ -204,7 +204,7 @@ export function emit(declarations: (dom.TopLevelDeclaration | string)[]) {
 
   return prettier.format(
     `/** @noSelfInFile */
-// @validateApiUsageDefault server
+// @validateApiUsageDefault server 服务端
 
 ${content}`,
     prettierConfig,
