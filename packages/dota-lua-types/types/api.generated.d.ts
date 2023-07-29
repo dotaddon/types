@@ -1677,11 +1677,11 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
     /**
      * Add a modifier to this unit.
      */
-    AddNewModifier<T extends modifierTable>(
+    AddNewModifier<T extends object>(
         caster: CDOTA_BaseNPC | undefined,
         ability: CDOTABaseAbility | undefined,
         modifierName: string,
-        modifierTable: T,
+        modifierTable: T | null,
     ): CDOTA_Buff;
     /**
      * Adds the no draw flag.
@@ -10296,7 +10296,9 @@ declare function ListenToGameEvent<TName extends keyof GameEventDeclarations, TC
  *
  * @both
  */
-declare function LoadKeyValues(filePath: string): object;
+declare function LoadKeyValues<T extends Record<string, any>>(
+    filePath: `scripts/${string}.${'kv' | 'txt'}`,
+): Record<string, T>;
 
 /**
  * Creates a table from the specified keyvalues string.

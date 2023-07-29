@@ -4,7 +4,9 @@
 /// <reference path="api-types.generated.d.ts" />
 /// <reference path="events.generated.d.ts" />
 
+/** 地图中心 */
 declare const vec3_origin: Vector;
+/** 最大向量 */
 declare const vec3_invalid: Vector;
 
 type NetworkedData<T> = T extends string | number
@@ -30,11 +32,6 @@ type DotaConstructor<T extends object> = {
 type __NumberLike = number & Record<Exclude<keyof number, 'toString'>, never>;
 
 interface modifierTable {
-    index?:number
-    length?:number
-    type?:number
-    name?:number
-    parent?:number
-    creation?:number
+    /** 持续时间 */
     duration?: number
 }

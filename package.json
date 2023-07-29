@@ -7,7 +7,7 @@
   "scripts": {
     "build": "run-p build:*",
     "build:tsc": "tsc -b packages",
-    "build:types": "ts-node-script build",
+    "build:types": "tsx build",
     "check-generated": "node scripts/check-generated.js",
     "dev": "run-p dev:*",
     "dev:tsc": "tsc -b packages --watch",

@@ -62,6 +62,16 @@ export const overrides: Record<string, ApiOverride> = {
     return: 'T[K]',
   },
 
+  LoadKeyValues: {
+    generics: [{ name: 'T', extend: 'Record<string, any>' }],
+    args: { 'filePath': '`scripts/${string}.${("kv"|"txt")}`' },
+    return: 'Record<string, T>',
+  },
+
+  'CDOTA_Item.GetParent': {
+    return: 'CDOTA_BaseNPC',
+  },
+
   DeepPrintTable: {
     args: { 'table?': 'Record<any, any>' },
   },
@@ -86,6 +96,12 @@ export const overrides: Record<string, ApiOverride> = {
             'NetworkedData<CCustomGameEventManager.InferEventType<T, object> & { PlayerID: PlayerID }>',
         },
       },
+    },
+  },
+  'CDOTA_BaseNPC.AddNewModifier': {
+    generics: [{ name: 'T', extend: 'object' }],
+    args: {
+      modifierTable: "T | null",
     },
   },
 };
