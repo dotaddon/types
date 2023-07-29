@@ -5,7 +5,7 @@ TypeScript declarations for Dota 2 Custom Game
 [Panorama](https://github.com/ModDota/TypeScriptDeclarations/tree/master/packages/panorama-types)
 API, generated from [dota-data](https://github.com/ark120202/dota-data) dumps.
 
-Check out our [addon template](https://github.com/ModDota/TypeScriptAddonTemplate) for usage
+Check out our [addon template](https://gitee.com/kill-seven-at-once/ts-dota-rpg) for usage
 examples.
 
 ### Updating after a DOTA2 update (for contributors)

@@ -8,9 +8,9 @@
     "types",
     "typescript"
   ],
-  "homepage": "https://github.com/ModDota/TypeScriptDeclarations#readme",
-  "bugs": "https://github.com/ModDota/TypeScriptDeclarations/issues",
-  "repository": "https://github.com/ModDota/TypeScriptDeclarations/tree/master/packages/dota-lua-types",
+  "homepage": "https://github.com/takegine/TypeScriptDeclarations#readme",
+  "bugs": "https://github.com/takegine/TypeScriptDeclarations/issues",
+  "repository": "https://github.com/takegine/TypeScriptDeclarations/tree/master/packages/dota-lua-types",
   "license": "MIT",
   "author": "ark120202",
   "files": [

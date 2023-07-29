@@ -2,18 +2,19 @@
 
 TypeScript definitions for Dota 2 Lua API, designed to be used with
 [TypeScriptToLua](https://github.com/TypeScriptToLua/TypeScriptToLua).
+[![npm标签](https://img.shields.io/npm/v/@mobilc/dota-lua-types)](https://www.npmjs.com/package/@mobilc/dota-lua-types)
 
 ## Installation
 
-> Check out our [addon template](https://github.com/ModDota/TypeScriptAddonTemplate) for usage
+> Check out our [addon template](https://gitee.com/kill-seven-at-once/ts-dota-rpg) for usage
 > examples.
 
 1. Get package from npm
 
 ```shell
-yarn add -D @moddota/dota-lua-types
+pnpm add -D @mobilc/dota-lua-types
 # or
-npm install -D @moddota/dota-lua-types
+npm install -D @mobilc/dota-lua-types
 ```
 
 2. Modify your `tsconfig.json`
@@ -21,8 +22,8 @@ npm install -D @moddota/dota-lua-types
 ```json
 {
   "compilerOptions": {
-    "types": ["@moddota/dota-lua-types"],
-    "plugins": [{ "transform": "@moddota/dota-lua-types/transformer" }]
+    "types": ["@mobilc/dota-lua-types"],
+    "plugins": [{ "transform": "@mobilc/dota-lua-types/transformer" }]
   }
 }
 ```
@@ -30,11 +31,11 @@ npm install -D @moddota/dota-lua-types
 ## Enums
 
 This package includes 2 versions of enum types - raw and normalized. Raw types are included with
-`"types": ["@moddota/dota-lua-types"]`. They are defined using original engine names and have no structural
+`"types": ["@mobilc/dota-lua-types"]`. They are defined using original engine names and have no structural
 changes. This makes the code using some enums compatible with Panorama, however it leads to
 repetition and requires you to use inconsistent standard names.
 
-Normalized enum types can be included with `"types": ["@moddota/dota-lua-types/normalized"]`. With these
+Normalized enum types can be included with `"types": ["@mobilc/dota-lua-types/normalized"]`. With these
 types, enums have consistent names and have no repeated parts. For example, instead of
 `EDOTA_ModifyGold_Reason.DOTA_ModifyGold_Unspecified` you have to write
 `ModifyGoldReason.UNSPECIFIED`.
