@@ -4157,6 +4157,10 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
     RemoveOnDeath(): boolean;
     /** @both */
     SetHasCustomTransmitterData(hasCustomData: boolean): void;
+    /** @server */
+    HandleCustomTransmitterData(data: object): void
+    /** @client */
+    AddCutomTransmitterData(): object
     /**
      * Apply the overhead offset to the attached effect.
      *
