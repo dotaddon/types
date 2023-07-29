@@ -2,3 +2,5 @@
 /packages/*/types/*.generated.d.ts
 /packages/*/transformer/*
 !/packages/*/transformer/index.ts
+
+packages/**/normalized.d.ts
