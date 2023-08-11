@@ -17,8 +17,8 @@ importers:
         specifier: workspace:*
         version: link:packages/panorama-types
       '@moddota/dota-data':
-        specifier: 0.35.0
-        version: 0.35.0
+        specifier: ^0.37.0
+        version: 0.37.0
       '@types/fs-extra':
         specifier: ^9.0.4
         version: 9.0.13
@@ -431,8 +431,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@moddota/dota-data@0.35.0:
-    resolution: {integrity: sha512-Imn65iWeyKwvbkoqRMsSB4JjXzdGGZ+9lh2AZIKyUNuVbMTIoJScjvDj3Hi+zuz22n++4mnkCUIpJBx9vegj1w==}
+  /@moddota/dota-data@0.37.0:
+    resolution: {integrity: sha512-dlyLw4b251ihhZC7dKOJPJZ446EJN3XtAYL5pDNmXMfpGYppFf09/VMnFaT1uDV3QqdFupoLece/+HmUbWSYFA==}
     engines: {node: '>=12.13.0'}
     dependencies:
       fs-extra: 9.1.0
