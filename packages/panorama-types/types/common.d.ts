@@ -1,3 +1,4 @@
+/// <reference path="active.d.ts" />
 /// <reference path="api.d.ts" />
 /// <reference path="css.d.ts" />
 /// <reference path="events.generated.d.ts" />

@@ -1808,26 +1808,14 @@ interface DollarStatic {
     GetContextPanel(): Panel;
     Schedule(time: number, callback: () => void): ScheduleID;
     CancelScheduled(scheduledEvent: ScheduleID): void;
-    DispatchEvent(event: string, panelID?: string, ...args: any[]): void;
-    DispatchEvent(event: string, panel: PanelBase, ...args: any[]): void;
-    DispatchEventAsync(delay: number, event: string, panelID?: string, ...args: any[]): void;
-    DispatchEventAsync(delay: number, event: string, panel: PanelBase, ...args: any[]): void;
+    DispatchEvent<T extends keyof panelEventDeclarations>(event: T, panel?: PanelBase | string | undefined, ...args: Parameters<panelEventDeclarations[T]>): void;
+    DispatchEventAsync<T extends keyof panelEventDeclarations>(delay: number, event: T, panelID?: string, ...args: Parameters<panelEventDeclarations[T]>): void;
     Language(): string;
     Localize(token: string, parent?: PanelBase): string;
     LocalizePlural(token: string, value: number, parent?: PanelBase): string;
-    RegisterEventHandler(
-        event: 'DragStart',
-        parent: PanelBase,
-        handler: (panelID: string, settings: DragSettings) => boolean,
-    ): void;
-    RegisterEventHandler(
-        event: 'DragEnd' | 'DragDrop' | 'DragEnter' | 'DragLeave',
-        parent: PanelBase,
-        handler: (panelID: string, dragged: Panel) => boolean,
-    ): void;
-    RegisterEventHandler(event: string, parent: PanelBase, handler: (...args: any[]) => void): void;
-    RegisterForUnhandledEvent(event: string, handler: (...args: any[]) => void): UnhandledEventListenerID;
-    UnregisterForUnhandledEvent(event: string, handle: UnhandledEventListenerID): void;
+    RegisterEventHandler<T extends keyof panelEventDeclarations>(event: T, parent: PanelBase | string, handler: panelEventDeclarations[T]): void;
+    RegisterForUnhandledEvent<T extends keyof panelEventDeclarations>(event: T, handler: panelEventDeclarations[T]): UnhandledEventListenerID;
+    UnregisterForUnhandledEvent(event: keyof panelEventDeclarations, handle: UnhandledEventListenerID): void;
     Each<T>(list: T[], callback: (item: T, index: number) => void): void;
     Each<T>(map: { [key: string]: T }, callback: (value: T, key: string) => void): void;
     Each<T>(map: { [key: number]: T }, callback: (value: T, key: number) => void): void;
