@@ -1044,9 +1044,9 @@ interface CScriptBindingPR_Entities {
 
     GetNumItemsInInventory(nEntityIndex: EntityIndex): number;
 
-    GetItemInSlot(nEntityIndex: EntityIndex, nSlotIndex: number): ItemEntityIndex;
+    GetItemInSlot(nEntityIndex: EntityIndex, nSlotIndex: ItemSlot_t): ItemEntityIndex;
 
-    GetAbility(nEntityIndex: EntityIndex, nSlotIndex: number): AbilityEntityIndex;
+    GetAbility(nEntityIndex: EntityIndex, nSlotIndex: ItemSlot_t): AbilityEntityIndex;
 
     GetAbilityByName(nEntityIndex: EntityIndex, pszAbilityName: string): AbilityEntityIndex;
 
@@ -1455,7 +1455,7 @@ interface CScriptBindingPR_Game {
     /**
      * Returns the keybind (as a string) for the requested inventory slot.
      */
-    GetKeybindForInventorySlot(iSlot: number): string;
+    GetKeybindForInventorySlot(iSlot: ItemSlot_t): string;
 
     /**
      * Returns the keybind (as a string).
@@ -1767,8 +1767,11 @@ interface DollarStatic {
     (selector: string): Panel;
     FindChildInContext(selector: string): Panel;
 
-    CreatePanel<K extends keyof PanoramaPanelNameMap>(type: K, root: PanelBase, id: string): PanoramaPanelNameMap[K];
-    CreatePanel(type: string, root: PanelBase, id: string): Panel;
+    CreatePanel<K extends string>(
+        type: K extends keyof PanoramaPanelNameMap ? K : string, 
+        root: PanelBase, 
+        id: string
+    ): K extends keyof PanoramaPanelNameMap ? PanoramaPanelNameMap[K] : Panel;
 
     /**
      * @param properties An object with XML-style properties added to the created panel.
@@ -1778,14 +1781,14 @@ interface DollarStatic {
      *     text: "Button",
      *     onactivate: "$.Msg('Button Pressed')",
      * });
-     */
-    CreatePanelWithProperties<K extends keyof PanoramaPanelNameMap>(
-        type: K,
+      *///<T extends string | object>(
+    //      eventName: (T extends string ? T : string) | keyof CustomGameEventDeclarations,
+    CreatePanelWithProperties<K extends string>(
+        type: K extends keyof PanoramaPanelNameMap ? K : string,
         root: PanelBase,
         id: string,
         properties: Record<string, any>,
-    ): PanoramaPanelNameMap[K];
-    CreatePanelWithProperties(type: string, root: PanelBase, id: string, properties: Record<string, any>): Panel;
+    ): K extends keyof PanoramaPanelNameMap ? PanoramaPanelNameMap[K] : Panel;
 
     CreatePanelWithCurrentContext(root?: PanelBase): Panel;
 
@@ -1816,9 +1819,8 @@ interface DollarStatic {
     RegisterEventHandler<T extends keyof panelEventDeclarations>(event: T, parent: PanelBase | string, handler: panelEventDeclarations[T]): void;
     RegisterForUnhandledEvent<T extends keyof panelEventDeclarations>(event: T, handler: panelEventDeclarations[T]): UnhandledEventListenerID;
     UnregisterForUnhandledEvent(event: keyof panelEventDeclarations, handle: UnhandledEventListenerID): void;
-    Each<T>(list: T[], callback: (item: T, index: number) => void): void;
-    Each<T>(map: { [key: string]: T }, callback: (value: T, key: string) => void): void;
-    Each<T>(map: { [key: number]: T }, callback: (value: T, key: number) => void): void;
+    Each<T>(map: Record<string, T>, callback: (value: T, key: string) => void): void;
+    Each<T>(map: T[] | Record<number,T>, callback: (value: T, key: number) => void): void;
 
     /** @deprecated */
     AsyncWebRequest(url: string, data: AsyncWebRequestData): void;
@@ -1831,7 +1833,7 @@ interface DollarStatic {
      */
     RegisterKeyBind<T extends PanelBase = Panel>(
         panel: T | string,
-        key: string,
+        key: 按键列表,
         callback: (source: 'keyboard' | 'gamepad', presses: number, panel: T) => void,
     ): void;
 

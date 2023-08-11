@@ -84,13 +84,69 @@ interface PanoramaPanelNameMap {
     /** 死亡状态 */
     DOTAHUDDeathPanel: Panel
     /** BUFF栏 */
-    DOTABuffList: Panel
+    DOTABuffList: DOTABuffListPanel
     /** 天赋树图形 */
     DOTAHudTalentDisplay: Panel
     /** 天赋树弹出 */
     DOTAStatBranch: Panel
+
+
+    DOTAAbilityDetails: AbilityImage;
+    DOTAAbilityList: Panel;
+
+    DOTASettingsEnum: Panel;
+    DropDownMenu: DropDown
+    DOTASettingsEnumDropDown: DropDown;
+
+    RangeSlider: SliderPanel
+
+    TextEntryAutocomplete: TextEntry;
+    TextEntryIMEControls: TextEntry;
+
+    CycleButton: ToggleButton;
+
+    VerticalScrollBar: Panel
+    HorizontalScrollBar: Panel
+    HTMLHorizontalScrollBar: Panel
+    HTMLVerticalScrollBar: Panel
+    EdgeScroller: Panel
+    EdgeScrollBar: Panel
+
+    SimpleContextMenu: Panel
+    TournamentMatchDetails: Panel
+
+    DOTASortHeader: Panel
+    DOTAPunchCard: Panel
+    DOTATooltipFriendsMenu: Panel
+    DOTATooltipCustomGame: Panel
+    DOTATooltipProfileCard: Panel
+    DOTAContextMenuPlayer: Panel
+    DOTATooltipChatBubble: Panel
+    DOTATooltipDroppedItem: Panel
+    DOTATooltipRune: Panel
+
+    DOTAGameItemsPage: Panel
+    DOTAShopItem: ItemImage
+    DOTAWatchDownloadsElement: Panel
+    DOTACustomGamesSubscribedPage: Panel
+    DOTACustomLobbyList: Panel
+    DOTAParty: Panel
+    DOTAChat: Panel
+    DOTAPostGame: Panel
+    DOTATreasureDetailsPage: Panel
+    AsyncDataPanel: Panel
+    DOTAGuildImage: ImagePanel
+    DOTAEventCrestImage: ImagePanel
 }
 
+declare interface HeroImage extends ImagePanel {
+    persona: string;
+}
+
+declare interface DOTABuffListPanel extends Panel {
+    showbuffs: boolean;
+    showdebuffs: boolean;
+}
 // from https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Panorama/Events#Default_Event_Attributes
 type PanelEvent =
     | 'onactivate'
@@ -134,6 +190,13 @@ interface PanelBase {
 
     SetPanelEvent(event: PanelEvent, handler: () => void): void;
     RunScriptInPanelContext(script: string): void;
+}
+
+declare const enum scrollBehavior {
+    自由对齐 = 0,
+    左对齐 = 1,
+    右对齐 = 2,
+    居中对齐 = 3,
 }
 
 interface Panel extends PanelBase {
@@ -258,7 +321,7 @@ interface Panel extends PanelBase {
     ScrollToRightEdge(): void;
 
     // Scroll behaviour is an enum?
-    ScrollParentToMakePanelFit(scrollBehaviour: number, unknown: boolean): void;
+    ScrollParentToMakePanelFit(scrollBehaviour: scrollBehavior, unknown: boolean): void;
     BCanSeeInParentScroll(): boolean;
 
     GetAttributeInt(name: string, defaultValue: number): number;
