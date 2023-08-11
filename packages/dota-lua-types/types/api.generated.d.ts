@@ -1278,6 +1278,8 @@ declare const CDOTA_Ability_Lua: DotaConstructor<CDOTA_Ability_Lua>;
 declare const C_DOTA_Ability_Lua: typeof CDOTA_Ability_Lua;
 
 declare interface CDOTA_Ability_Lua extends CDOTABaseAbility {
+    /** @both */
+    entindex(): AbilityEntityIndex;
     /**
      * Determine whether an issued command with no target is valid.
      *
@@ -2029,7 +2031,7 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
     /**
      * Get a modifier name by index.
      */
-    GetModifierNameByIndex(index: number): string;
+    GetModifierNameByIndex(index: BuffID): string;
     /**
      * Gets the stack count of a given modifier.
      *
@@ -3424,6 +3426,8 @@ declare const CDOTA_Item: DotaConstructor<CDOTA_Item>;
 declare const C_DOTA_Item: typeof CDOTA_Item;
 
 declare interface CDOTA_Item extends CDOTABaseAbility {
+    /** @both */
+    entindex(): ItemEntityIndex;
     CanBeUsedOutOfInventory(): boolean;
     /** @client */
     CanOnlyPlayerHeroPickup(): boolean;
@@ -9901,7 +9905,7 @@ declare function EmitSoundOnLocationWithCaster(location: Vector, soundName: stri
  *
  * @both
  */
-declare function EntIndexToHScript(entityIndex: EntityIndex): CBaseEntity | undefined;
+declare function EntIndexToHScript<T extends CBaseEntity>(entityIndex: ReturnType<T['entindex']>): T | undefined;
 
 /**
  * Issue an order from a script table.

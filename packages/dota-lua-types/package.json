@@ -23,6 +23,9 @@
   "dependencies": {
     "lua-types": "^2.13.1"
   },
+  "devDependencies": {
+    "@mobilc/shared-type":"workspace:*"
+  },
   "peerDependencies": {
     "typescript": "^4.0.0 || ^5.0.0",
     "@typescript-to-lua/language-extensions": "^1.0.0"

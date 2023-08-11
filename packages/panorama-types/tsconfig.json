@@ -1,8 +1,9 @@
 {
-  "extends": "@ark120202/typescript-config/base.json",
+  "extends": "@mobilc/tsconfig/base.json",
   "files": ["index.d.ts"],
   "compilerOptions": {
     "noEmit": true,
-    "lib": ["es2017"]
+    "lib": ["es2017"],
+    "types": ["@mobilc/shared-type"],
   }
 }

@@ -3,6 +3,7 @@
   "compilerOptions": {
     "noEmit": true,
     "lib": ["esnext"],
+    "types": ["@mobilc/shared-type"],
 
     "strict": true,
     "importHelpers": true,
