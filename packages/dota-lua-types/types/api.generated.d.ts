@@ -2258,6 +2258,8 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
     IsCurrentlyHorizontalMotionControlled(): boolean;
     IsCurrentlyVerticalMotionControlled(): boolean;
     /** @both */
+    IsDebuffImmune(): boolean;
+    /** @both */
     IsDisarmed(): boolean;
     /** @both */
     IsDominated(): boolean;
@@ -4302,6 +4304,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierAoEBonusPercentage?(): number;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierAttackPointConstant?(): number;
     /**
      * @abstract
@@ -4312,7 +4319,7 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetModifierAttackRangeBonusPercentage?(): void;
+    GetModifierAttackRangeBonusPercentage?(): number;
     /**
      * @abstract
      * @both
@@ -4342,12 +4349,12 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetModifierAttackSpeedPercentage?(): void;
+    GetModifierAttackSpeedPercentage?(): number;
     /**
      * @abstract
      * @both
      */
-    GetModifierAttackSpeedReductionPercentage?(): void;
+    GetModifierAttackSpeedReductionPercentage?(): number;
     /**
      * @abstract
      * @both
@@ -4377,12 +4384,12 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetModifierBaseAttackTimeConstant_Adjust?(): void;
+    GetModifierBaseAttackTimeConstant_Adjust?(): number;
     /**
      * @abstract
      * @both
      */
-    GetModifierBaseAttackTimePercentage?(): void;
+    GetModifierBaseAttackTimePercentage?(): number;
     /**
      * @abstract
      * @both
@@ -4402,6 +4409,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierBecomeUniversal?(): 0 | 1;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierBonusDamageOutgoing_Percentage?(): void;
     /**
      * @abstract
@@ -4412,7 +4424,7 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetModifierBonusStats_Agility_Percentage?(): void;
+    GetModifierBonusStats_Agility_Percentage?(): number;
     /**
      * @abstract
      * @both
@@ -4422,7 +4434,7 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetModifierBonusStats_Intellect_Percentage?(): void;
+    GetModifierBonusStats_Intellect_Percentage?(): number;
     /**
      * @abstract
      * @both
@@ -4432,7 +4444,7 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetModifierBonusStats_Strength_Percentage?(): void;
+    GetModifierBonusStats_Strength_Percentage?(): number;
     /**
      * @abstract
      * @both
@@ -4447,7 +4459,7 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetModifierCastRangeBonusPercentage?(): void;
+    GetModifierCastRangeBonusPercentage?(event: ModifierAbilityEvent): number;
     /**
      * @abstract
      * @both
@@ -4508,6 +4520,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @both
      */
     GetModifierDamageOutgoing_Percentage_Illusion_Amplify?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierDamageOutgoing_PercentageMultiplicative?(): void;
     /**
      * @abstract
      * @both
@@ -4878,7 +4895,7 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetModifierPercentageAttackAnimTime?(): void;
+    GetModifierPercentageAttackAnimTime?(): number;
     /**
      * @abstract
      * @both
@@ -4893,7 +4910,7 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetModifierPercentageCooldownOngoing?(): void;
+    GetModifierPercentageCooldownOngoing?(event: ModifierAbilityEvent): number;
     /**
      * @abstract
      * @both
@@ -5070,12 +5087,17 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierProjectileSpeed?(): number;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierProjectileSpeedBonus?(): number;
     /**
      * @abstract
      * @both
      */
-    GetModifierProjectileSpeedBonusPercentage?(): void;
+    GetModifierProjectileSpeedBonusPercentage?(): number;
     /**
      * @abstract
      * @both
@@ -5085,19 +5107,26 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetModifierRadarCooldownReduction?(): void;
+    GetModifierRadarCooldownReduction?(): number;
     /**
-     * Always applies scepter when this property is active
+     * Applies scepter when this property is active
      *
      * @abstract
      * @both
      */
-    GetModifierScepter?(): void;
+    GetModifierScepter?(): 0 | 1;
+    /**
+     * Applies shard when this property is active
+     *
+     * @abstract
+     * @both
+     */
+    GetModifierShard?(): 0 | 1;
     /**
      * @abstract
      * @both
      */
-    GetModifierShard?(): void;
+    GetModifierSlowResistance?(): number;
     /**
      * @abstract
      * @both
@@ -5197,7 +5226,7 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetModifierTurnRateConstant?(): void;
+    GetModifierTurnRateConstant?(): number;
     /**
      * @abstract
      * @both
@@ -5237,7 +5266,7 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetPrimaryStatDamageMultiplier?(): void;
+    GetPrimaryStatDamageMultiplier?(): number;
     /**
      * @abstract
      * @both
@@ -5247,12 +5276,12 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetSuppressCleave?(): void;
+    GetSuppressCleave?(event: ModifierAttackEvent): 0 | 1;
     /**
      * @abstract
      * @both
      */
-    GetSuppressTeleport?(): void;
+    GetSuppressTeleport?(): 0 | 1;
     /**
      * @abstract
      * @both
@@ -5390,6 +5419,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @both
      */
     OnDominated?(event: ModifierUnitEvent): void;
+    /**
+     * @abstract
+     * @both
+     */
+    OnForceProcMagicStick?(): void;
     /**
      * @abstract
      * @both
@@ -6609,6 +6643,10 @@ declare interface CDOTABaseGameMode extends CBaseEntity {
      * Set a custom cooldown for team Scan ability.
      */
     SetCustomScanCooldown(cooldown: number): void;
+    /**
+     * Set a custom max charges for team Scan ability.
+     */
+    SetCustomScanMaxCharges(maxCharges: number): void;
     /**
      * Set the effect used as a custom weather effect, when units are on non-default
      * terrain, in this mode.

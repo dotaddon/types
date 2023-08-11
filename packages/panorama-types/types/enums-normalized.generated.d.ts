@@ -195,6 +195,7 @@ declare enum UnitOrder {
     DROP_ITEM_AT_FOUNTAIN = 37,
     TAKE_ITEM_FROM_NEUTRAL_ITEM_STASH = 38,
     MOVE_RELATIVE = 39,
+    CAST_TOGGLE_ALT = 40,
 }
 
 /**
@@ -598,6 +599,7 @@ declare enum AbilityBehavior {
     IGNORE_SILENCE = 137438953472,
     OVERSHOOT = 274877906944,
     IGNORE_MUTED = 549755813888,
+    ALT_CASTABLE = 1099511627776,
 }
 
 /**
@@ -1092,7 +1094,7 @@ declare enum LoadoutType {
     TYPE_NONE = 96,
 }
 
-declare const MODIFIER_FUNCTION_LAST: 272;
+declare const MODIFIER_FUNCTION_LAST: 278;
 
 /**
  * @deprecated 不规范的枚举名称。仅为库兼容性而定义。
@@ -1997,7 +1999,7 @@ declare enum ModifierFunction {
      */
     MODEL_SCALE_ANIMATE_TIME = 221,
     /**
-     * Always applies scepter when this property is active
+     * Applies scepter when this property is active
      *
      *
      *
@@ -2005,7 +2007,11 @@ declare enum ModifierFunction {
      */
     IS_SCEPTER = 222,
     /**
-     * Method Name: `GetModifierShard`
+     * Applies shard when this property is active
+     *
+     *
+     *
+     * Method Name: `GetModifierShard`.
      */
     IS_SHARD = 223,
     /**
@@ -2204,10 +2210,34 @@ declare enum ModifierFunction {
      * Method Name: `GetModifierAvoidDamageAfterReductions`
      */
     AVOID_DAMAGE_AFTER_REDUCTIONS = 271,
+    /**
+     * Method Name: `GetModifierDamageOutgoing_PercentageMultiplicative`
+     */
+    DAMAGEOUTGOING_PERCENTAGE_MULTIPLICATIVE = 272,
+    /**
+     * Method Name: `GetModifierSlowResistance`
+     */
+    SLOW_RESISTANCE = 273,
+    /**
+     * Method Name: `GetModifierAoEBonusPercentage`
+     */
+    AOE_BONUS_PERCENTAGE = 274,
+    /**
+     * Method Name: `GetModifierProjectileSpeed`
+     */
+    PROJECTILE_SPEED = 275,
+    /**
+     * Method Name: `GetModifierBecomeUniversal`
+     */
+    BECOME_UNIVERSAL = 276,
+    /**
+     * Method Name: `OnForceProcMagicStick`
+     */
+    ON_FORCE_PROC_MAGIC_STICK = 277,
     INVALID = 65535,
 }
 
-declare const MODIFIER_STATE_LAST: 59;
+declare const MODIFIER_STATE_LAST: 60;
 
 /**
  * @deprecated 不规范的枚举名称。仅为库兼容性而定义。
@@ -2274,6 +2304,7 @@ declare enum ModifierState {
     DEBUFF_IMMUNE = 56,
     NO_INVISIBILITY_VISUALS = 57,
     ALLOW_PATHING_THROUGH_BASE_BLOCKER = 58,
+    IGNORING_MOVE_ORDERS = 59,
 }
 
 /**

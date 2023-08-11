@@ -72,6 +72,7 @@ declare const enum AttributeDerivedStats {
     INTELLIGENCE_MANA = 7,
     INTELLIGENCE_MANA_REGEN = 8,
     INTELLIGENCE_MAGIC_RESIST = 9,
+    ALL_DAMAGE = 10,
 }
 
 declare const enum Attributes {
@@ -210,6 +211,7 @@ type DOTA_ABILITY_BEHAVIOR = AbilityBehavior;
 
 declare const enum AbilityBehavior {
     LAST_RESORT_POINT = -2147483648,
+    ALT_CASTABLE = 0,
     CAN_SELF_CAST = 0,
     FREE_DRAW_TARGETING = 0,
     IGNORE_MUTED = 0,
@@ -493,7 +495,8 @@ declare const enum InvalidOrders {
     INVALID_ORDER_BEYOND_PHYSICAL_ITEM_LIMIT = 115,
     INVALID_ORDER_ABILITY_PING_DEAD_ALLY = 116,
     INVALID_ORDER_CANT_LOCKCOMBINE_NEUTRAL_ITEMS = 117,
-    INVALID_ORDER_COUNT = 118,
+    INVALID_ORDER_ABILITY_CANT_ALT_CAST = 118,
+    INVALID_ORDER_COUNT = 119,
 }
 
 /**
@@ -1195,6 +1198,7 @@ declare const enum UnitOrder {
     DROP_ITEM_AT_FOUNTAIN = 37,
     TAKE_ITEM_FROM_NEUTRAL_ITEM_STASH = 38,
     MOVE_RELATIVE = 39,
+    CAST_TOGGLE_ALT = 40,
 }
 
 /**
@@ -2575,17 +2579,17 @@ declare const enum GameActivity {
     DOTA_FORCESTAFF_STATUE = 1773,
     DOTA_TELEPORT_STATUE = 1774,
     DOTA_VICTORY_STATUE = 1775,
-    DOTA_DISABLED_END = 1776,
-    DOTA_RUN_ALT = 1781,
-    DOTA_VOODOO_REST = 1782,
-    DOTA_CYCLONE = 1783,
-    DOTA_IMPALE = 1784,
-    DOTA_TORRENT = 1785,
-    DOTA_RELAX_IN = 1786,
-    DOTA_RELAX_OUT = 1787,
-    DOTA_CAST_FENCE = 1788,
-    DOTA_RADIANT_CREEP_HAMMER = 1790,
-    DOTA_SPWN = 1791,
+    DOTA_DISABLED_END = 1777,
+    DOTA_RELAX_IN = 1778,
+    DOTA_RELAX_OUT = 1779,
+    DOTA_CAST_FENCE = 1780,
+    DOTA_RADIANT_CREEP_HAMMER = 1782,
+    DOTA_SPWN = 1783,
+    DOTA_RUN_ALT = 1787,
+    DOTA_VOODOO_REST = 1788,
+    DOTA_CYCLONE = 1789,
+    DOTA_IMPALE = 1790,
+    DOTA_TORRENT = 1791,
 }
 
 /**
@@ -2601,7 +2605,7 @@ declare const enum LuaModifierMotionType {
     INVALID = 4,
 }
 
-declare const MODIFIER_FUNCTION_LAST: 272;
+declare const MODIFIER_FUNCTION_LAST: 278;
 
 /**
  * @deprecated 不规范的枚举名称。仅为库兼容性而定义。
@@ -3506,7 +3510,7 @@ declare const enum ModifierFunction {
      */
     MODEL_SCALE_ANIMATE_TIME = 221,
     /**
-     * Always applies scepter when this property is active
+     * Applies scepter when this property is active
      *
      *
      *
@@ -3514,7 +3518,11 @@ declare const enum ModifierFunction {
      */
     IS_SCEPTER = 222,
     /**
-     * Method Name: `GetModifierShard`
+     * Applies shard when this property is active
+     *
+     *
+     *
+     * Method Name: `GetModifierShard`.
      */
     IS_SHARD = 223,
     /**
@@ -3713,6 +3721,30 @@ declare const enum ModifierFunction {
      * Method Name: `GetModifierAvoidDamageAfterReductions`
      */
     AVOID_DAMAGE_AFTER_REDUCTIONS = 271,
+    /**
+     * Method Name: `GetModifierDamageOutgoing_PercentageMultiplicative`
+     */
+    DAMAGEOUTGOING_PERCENTAGE_MULTIPLICATIVE = 272,
+    /**
+     * Method Name: `GetModifierSlowResistance`
+     */
+    SLOW_RESISTANCE = 273,
+    /**
+     * Method Name: `GetModifierAoEBonusPercentage`
+     */
+    AOE_BONUS_PERCENTAGE = 274,
+    /**
+     * Method Name: `GetModifierProjectileSpeed`
+     */
+    PROJECTILE_SPEED = 275,
+    /**
+     * Method Name: `GetModifierBecomeUniversal`
+     */
+    BECOME_UNIVERSAL = 276,
+    /**
+     * Method Name: `OnForceProcMagicStick`
+     */
+    ON_FORCE_PROC_MAGIC_STICK = 277,
     INVALID = 65535,
 }
 
@@ -3740,7 +3772,7 @@ declare const enum ModifierRemove {
     ALLY = 2,
 }
 
-declare const MODIFIER_STATE_LAST: 59;
+declare const MODIFIER_STATE_LAST: 60;
 
 /**
  * @deprecated 不规范的枚举名称。仅为库兼容性而定义。
@@ -3807,6 +3839,7 @@ declare const enum ModifierState {
     DEBUFF_IMMUNE = 56,
     NO_INVISIBILITY_VISUALS = 57,
     ALLOW_PATHING_THROUGH_BASE_BLOCKER = 58,
+    IGNORING_MOVE_ORDERS = 59,
 }
 
 declare const MAX_PATTACH_TYPES: 16;
@@ -3912,7 +3945,7 @@ declare const enum PseudoRandom {
     NEUTRAL_DROP_TIER_5 = 72,
     MARS_BULWARK = 73,
     MUERTA_GUNSLINGER = 74,
-    BATRIDER_NAPALM = 75,
+    TROLL_FERVOR_SHARD = 75,
     CUSTOM_GENERIC = 76,
     CUSTOM_GAME_1 = 77,
     CUSTOM_GAME_2 = 78,
