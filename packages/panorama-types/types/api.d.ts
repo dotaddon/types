@@ -328,6 +328,21 @@ interface CDOTA_PanoramaScript_GameUI {
      * Returns `null` if `abilityName` is invalid.
      */
     ReplaceDOTAAbilitySpecialValues(abilityName: string, text: string): string | null;
+
+    /**
+     * Returns the localization token to use for a particular unit, given the unit's name.
+     */
+    GetUnitLocToken(name: string): string;
+
+    /**
+     * Get the localized version of a unit's name.
+     */
+    GetUnitNameLocalized(name: string): string;
+
+    /**
+     * Creates a localized version of the number
+     */
+    ConstructNumberString(n: number): string;
 }
 
 /**
@@ -426,9 +441,29 @@ interface CScriptBindingPR_Particles {
     SetParticleControl(particle: ParticleID, controlPoint: number, value: [number, number, number]): void;
 
     /**
-     * Set a particle's forward control point to a vector value.
+     * [OBSOLETE - Use SetParticleControlTransformForward] Set the orientation on a control point on a particle system
      */
     SetParticleControlForward(particle: ParticleID, controlPoint: number, value: [number, number, number]): void;
+
+    /**
+     * Set the position and orientation on a control point on a particle system.
+     */
+    SetParticleControlTransform(
+        particle: ParticleID,
+        controlPoint: number,
+        origin: [number, number, number],
+        angles: [number, number, number],
+    ): void;
+
+    /**
+     * Set the position and orientation (derived from a forward direction) on a control point on a particle system
+     */
+    SetParticleControlTransformForward(
+        particle: ParticleID,
+        controlPoint: number,
+        origin: [number, number, number],
+        forward: [number, number, number],
+    ): void;
 
     /**
      * Unknown use, any info welcome.
@@ -1770,7 +1805,8 @@ interface DollarStatic {
     CreatePanel<K extends string>(
         type: K extends keyof PanoramaPanelNameMap ? K : string, 
         root: PanelBase, 
-        id: string
+        id: string,
+        properties?: Record<string, any>,
     ): K extends keyof PanoramaPanelNameMap ? PanoramaPanelNameMap[K] : Panel;
 
     /**
@@ -1781,16 +1817,14 @@ interface DollarStatic {
      *     text: "Button",
      *     onactivate: "$.Msg('Button Pressed')",
      * });
-      *///<T extends string | object>(
-    //      eventName: (T extends string ? T : string) | keyof CustomGameEventDeclarations,
+     * @deprecated
+      */
     CreatePanelWithProperties<K extends string>(
         type: K extends keyof PanoramaPanelNameMap ? K : string,
         root: PanelBase,
         id: string,
         properties: Record<string, any>,
     ): K extends keyof PanoramaPanelNameMap ? PanoramaPanelNameMap[K] : Panel;
-
-    CreatePanelWithCurrentContext(root?: PanelBase): Panel;
 
     /**
      * Log a message
@@ -1814,13 +1848,25 @@ interface DollarStatic {
     DispatchEvent<T extends keyof panelEventDeclarations>(event: T, panel?: PanelBase | string | undefined, ...args: Parameters<panelEventDeclarations[T]>): void;
     DispatchEventAsync<T extends keyof panelEventDeclarations>(delay: number, event: T, panelID?: string, ...args: Parameters<panelEventDeclarations[T]>): void;
     Language(): string;
+    /**
+     * Localize a string. Optionally accepts Quantity, Precision, and Panel arguments.
+     */
     Localize(token: string, parent?: PanelBase): string;
+    Localize(token: string, value: number, parent?: PanelBase): string;
+    /**
+     * @deprecated
+     */
     LocalizePlural(token: string, value: number, parent?: PanelBase): string;
     RegisterEventHandler<T extends keyof panelEventDeclarations>(event: T, parent: PanelBase | string, handler: panelEventDeclarations[T]): void;
     RegisterForUnhandledEvent<T extends keyof panelEventDeclarations>(event: T, handler: panelEventDeclarations[T]): UnhandledEventListenerID;
     UnregisterForUnhandledEvent(event: keyof panelEventDeclarations, handle: UnhandledEventListenerID): void;
     Each<T>(map: Record<string, T>, callback: (value: T, key: string) => void): void;
     Each<T>(map: T[] | Record<number,T>, callback: (value: T, key: number) => void): void;
+
+    /**
+     * Gets the time this frame started, in seconds since panorama was initialized
+     */
+    FrameTime(): number;
 
     /** @deprecated */
     AsyncWebRequest(url: string, data: AsyncWebRequestData): void;
