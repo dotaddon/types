@@ -23,8 +23,8 @@ importers:
         specifier: workspace:*
         version: link:packages/tsconfig
       '@moddota/dota-data':
-        specifier: ^0.37.0
-        version: 0.37.0
+        specifier: ^0.38.0
+        version: 0.38.0
       '@types/fs-extra':
         specifier: ^9.0.4
         version: 9.0.13
@@ -445,8 +445,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@moddota/dota-data@0.37.0:
-    resolution: {integrity: sha512-dlyLw4b251ihhZC7dKOJPJZ446EJN3XtAYL5pDNmXMfpGYppFf09/VMnFaT1uDV3QqdFupoLece/+HmUbWSYFA==}
+  /@moddota/dota-data@0.38.0:
+    resolution: {integrity: sha512-30vmCJiERptWL4Df6qqsghpr5NRmRR0pyQr5fqVEUiSSpE55/F/4gRKGJcQKKEpjCIQwKd4recyhcfwJLUI+4Q==}
     engines: {node: '>=12.13.0'}
     dependencies:
       fs-extra: 9.1.0
