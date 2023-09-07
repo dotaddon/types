@@ -1846,7 +1846,7 @@ interface DollarStatic {
     Schedule(time: number, callback: () => void): ScheduleID;
     CancelScheduled(scheduledEvent: ScheduleID): void;
     DispatchEvent<T extends keyof panelEventDeclarations>(event: T, panel?: PanelBase | string | undefined, ...args: Parameters<panelEventDeclarations[T]>): void;
-    DispatchEventAsync<T extends keyof panelEventDeclarations>(delay: number, event: T, panelID?: string, ...args: Parameters<panelEventDeclarations[T]>): void;
+    DispatchEventAsync<T extends keyof panelEventDeclarations>(delay: number, event: T, panelID?: PanelBase | string | undefined, ...args: Parameters<panelEventDeclarations[T]>): void;
     Language(): string;
     /**
      * Localize a string. Optionally accepts Quantity, Precision, and Panel arguments.
