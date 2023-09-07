@@ -10,6 +10,9 @@ importers:
       '@mobilc/dota-lua-types':
         specifier: workspace:*
         version: link:packages/dota-lua-types
+      '@mobilc/panorama-polyfill':
+        specifier: ^0.0.5
+        version: 0.0.5
       '@mobilc/panorama-types':
         specifier: workspace:*
         version: link:packages/panorama-types
@@ -551,6 +554,17 @@ packages:
       - encoding
       - supports-color
       - typescript
+    dev: true
+
+  /@mobilc/panorama-polyfill@0.0.5:
+    resolution: {integrity: sha512-N5QYmW90oL0vI1gFFykXNtY5kcvxD8ZrvnDxkuVg3WfFHRzVOjepPO/YgdFGg4tCH/ZcPK7BB7zV5uWId5PveQ==}
+    peerDependencies:
+      core-js: ^3.6.5
+    peerDependenciesMeta:
+      core-js:
+        optional: true
+    dependencies:
+      object-inspect: 1.12.3
     dev: true
 
   /@moddota/dota-data@0.38.0:

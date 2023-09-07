@@ -1,3 +1,5 @@
+/// <reference types="@mobilc/panorama-polyfill/dist/timers" />
+/// <reference types="@mobilc/panorama-polyfill/dist/console" />
 /// <reference path="active.d.ts" />
 /// <reference path="api.d.ts" />
 /// <reference path="css.d.ts" />
