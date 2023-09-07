@@ -7,9 +7,6 @@ importers:
       '@ark120202/eslint-config':
         specifier: ^2.5.0
         version: 2.5.0(eslint@7.32.0)(typescript@5.0.4)
-      '@ark120202/typescript-config':
-        specifier: ^2.2.0
-        version: 2.2.0
       '@mobilc/dota-lua-types':
         specifier: workspace:*
         version: link:packages/dota-lua-types
@@ -147,10 +144,6 @@ packages:
       - eslint-import-resolver-webpack
       - supports-color
       - typescript
-    dev: true
-
-  /@ark120202/typescript-config@2.2.0:
-    resolution: {integrity: sha512-zSZ+NSTBMZiM6ePMMRAmnlehm2y2WE0hIUlf6VcvMHzY5cMnTxvyCbu12eZtsu0L3HM+lF6iA/t+q8cndwFdEQ==}
     dev: true
 
   /@babel/code-frame@7.12.11:
