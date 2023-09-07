@@ -116,7 +116,7 @@ interface CDOTA_PanoramaScript_GameEvents {
  */
 interface CustomUIConfig {}
 
-type MouseEvent = 'pressed' | 'doublepressed' | 'released' | 'wheeled';
+type DotaMouseEvent = 'pressed' | 'doublepressed' | 'released' | 'wheeled';
 
 /**
  * 0 - Left
@@ -169,7 +169,7 @@ interface CDOTA_PanoramaScript_GameUI {
     /**
      * Install a mouse input filter
      */
-    SetMouseCallback(callbackFn: (event: MouseEvent, value: MouseButton | MouseScrollDirection) => boolean): void;
+    SetMouseCallback(callbackFn: (event: DotaMouseEvent, value: MouseButton | MouseScrollDirection) => boolean): void;
 
     EnableAliMode(bEnable: boolean, nPort: number, offsetVal: number, flScale: number): void;
 

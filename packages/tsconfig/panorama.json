@@ -2,7 +2,7 @@
     "desc": "该目录下放置静态页面与玩家交互逻辑",
     "extends": "./base.json",
     "compilerOptions": {
-        "types": [ "@mobilc/panorama-types" ],
+        "types": ["@mobilc/shared-type", "@mobilc/panorama-types" ],
         "jsx": "react-jsx",
         "jsxImportSource": "react",
         "downlevelIteration": true,

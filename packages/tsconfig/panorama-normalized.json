@@ -1,0 +1,6 @@
+{
+  "extends": "./panorama.json",
+  "compilerOptions": {
+    "types": ["@mobilc/shared-type","@mobilc/panorama-types/normalized"]
+  }
+}

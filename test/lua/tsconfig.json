@@ -1,9 +1,4 @@
 {
-  "extends": "@ark120202/typescript-config/base.json",
+  "extends": "@mobilc/tsconfig/lua.json",
   "include": ["**/*", "../utils.d.ts"],
-  "compilerOptions": {
-    "types": ["@mobilc/dota-lua-types"],
-    "lib": ["esnext"],
-    "noEmit": true
-  }
 }
