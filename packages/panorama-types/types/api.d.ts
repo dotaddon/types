@@ -1802,6 +1802,15 @@ interface DollarStatic {
     (selector: string): Panel;
     FindChildInContext(selector: string): Panel;
 
+    /**
+     * @param properties An object with XML-style properties added to the created panel.
+     * @example
+     * $.CreatePanel("Label", $.GetContextPanel(), "id", {
+     *     class: "MyClass",
+     *     text: "Button",
+     *     onactivate: "$.Msg('Button Pressed')",
+     * });
+      */
     CreatePanel<K extends string>(
         type: K extends keyof PanoramaPanelNameMap ? K : string, 
         root: PanelBase, 
@@ -1809,16 +1818,7 @@ interface DollarStatic {
         properties?: Record<string, any>,
     ): K extends keyof PanoramaPanelNameMap ? PanoramaPanelNameMap[K] : Panel;
 
-    /**
-     * @param properties An object with XML-style properties added to the created panel.
-     * @example
-     * $.CreatePanelWithProperties("Label", $.GetContextPanel(), "id", {
-     *     class: "MyClass",
-     *     text: "Button",
-     *     onactivate: "$.Msg('Button Pressed')",
-     * });
-     * @deprecated
-      */
+    /** @deprecated */
     CreatePanelWithProperties<K extends string>(
         type: K extends keyof PanoramaPanelNameMap ? K : string,
         root: PanelBase,
