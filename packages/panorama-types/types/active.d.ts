@@ -183,7 +183,8 @@ interface panelEventDeclarations {
     DOTAShopCancelSearch(): void
     DOTASetSpectatorChatEnabled( arg0: boolean ): void
     DOTAGlobalSceneSetRootEntity(): void
-    DOTAGlobalSceneFireEntityInput( arg0: string, arg1: string, arg2: string, arg3: string, arg4: number ): void
+    DOTAGlobalSceneFireEntityInput(entityName: string, activateName: string, value: number | string): void
+    DOTAGlobalSceneSetRootEntity(entityName: string): void
     DOTAPopupBattleCupWinnerClose(): void
     DOTAPurchaseBattlePassLevelsApplyLevels(): void
     DOTAPurchaseBattlePassLevelsClose(): void
