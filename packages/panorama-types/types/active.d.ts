@@ -231,9 +231,9 @@ interface panelEventDeclarations {
     /** 启动玩家本地浏览器访问目标地址 */
     ExternalBrowserGoToURL(url: string): void
     /** 展示一个自定义的tip */
-    UIShowCustomLayoutParametersTooltip(id:string, xmlFile: `${string}.xml`, ParamsPassToXml: string): void
+    UIShowCustomLayoutParametersTooltip(tipName:string, xmlFile: `${string}.xml`, ParamsPassToXml: string): void
     /** 隐藏自定义的tip */
-    UIHideCustomLayoutTooltip(): void
+    UIHideCustomLayoutTooltip(tipName: string): void
 }
 
 // 小红象 发的 2023/2/10
