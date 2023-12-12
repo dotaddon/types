@@ -13,7 +13,7 @@
   "author": "西索酱",
   "types": "index.d.ts",
   "files": [
-    "index.d.ts"
+    "*.d.ts"
   ],
   "publishConfig": {
     "access": "public",
