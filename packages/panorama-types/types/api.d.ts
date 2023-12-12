@@ -1621,7 +1621,7 @@ interface CScriptBindingPR_Game {
      */
     GetPlayerIDsOnTeam(nTeam: DOTATeam_t): PlayerID[];
 
-    ServerCmd(pMsg: string): void;
+    ServerCmd<T>(commond: (T extends string ? T : string) | vCmdClient): void;
 
     SetDotaRefractHeroes(bEnabled: boolean): void;
 

@@ -10709,12 +10709,12 @@ declare function SendOverheadEventMessage(
  *
  * @both
  */
-declare function SendToConsole(arg1: string): void;
+declare function SendToConsole<T>(commond: (T extends string ? T : string) | vCmdClient): void;
 
 /**
  * Send a string to the console as a server command.
  */
-declare function SendToServerConsole(arg1: string): void;
+declare function SendToServerConsole<T>(commond: (T extends string ? T : string) | vCmdServer): void;
 
 /**
  * Sets an opvar value for all players.

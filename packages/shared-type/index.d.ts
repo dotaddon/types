@@ -1,3 +1,4 @@
+/// <reference path="commond.d.ts" />
 /** 实体实例的索引 */
 type EntityIndex = number & { _entityIndex: never };
 /** 技能实例的索引 */
