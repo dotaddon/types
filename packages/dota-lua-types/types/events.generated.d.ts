@@ -43,12 +43,14 @@ interface GameEventDeclarations {
     player_spawn: PlayerSpawnEvent;
     player_team: PlayerTeamEvent;
     local_player_team: object;
+    local_player_controller_team: object;
     player_changename: PlayerChangenameEvent;
     player_hurt: PlayerHurtEvent;
     /**
      * A public player chat.
      */
     player_chat: PlayerChatEvent;
+    local_player_pawn_changed: object;
     /**
      * Emits a sound to everyone on a team.
      */
@@ -102,6 +104,7 @@ interface GameEventDeclarations {
      */
     hltv_chat: HltvChatEvent;
     hltv_versioninfo: HltvVersioninfoEvent;
+    hltv_replay: HltvReplayEvent;
     demo_start: DemoStartEvent;
     demo_stop: object;
     demo_skip: DemoSkipEvent;
@@ -133,6 +136,7 @@ interface GameEventDeclarations {
     player_footstep: PlayerFootstepEvent;
     player_hintmessage: PlayerHintmessageEvent;
     break_breakable: BreakBreakableEvent;
+    broken_breakable: BrokenBreakableEvent;
     break_prop: BreakPropEvent;
     entity_killed: EntityKilledEvent;
     door_close: DoorCloseEvent;
@@ -149,10 +153,6 @@ interface GameEventDeclarations {
     spec_target_updated: SpecTargetUpdatedEvent;
     spec_mode_updated: SpecModeUpdatedEvent;
     entity_visible: EntityVisibleEvent;
-    /**
-     * The player pressed use but a use entity wasn't found.
-     */
-    player_use_miss: PlayerUseMissEvent;
     gameinstructor_draw: object;
     gameinstructor_nodraw: object;
     flare_ignite_npc: FlareIgniteNpcEvent;
@@ -187,6 +187,7 @@ interface GameEventDeclarations {
     dota_tower_kill: DotaTowerKillEvent;
     dota_effigy_kill: DotaEffigyKillEvent;
     dota_roshan_kill: DotaRoshanKillEvent;
+    dota_miniboss_kill: DotaMinibossKillEvent;
     dota_courier_lost: DotaCourierLostEvent;
     dota_courier_respawned: DotaCourierRespawnedEvent;
     dota_glyph_used: DotaGlyphUsedEvent;
@@ -361,13 +362,11 @@ interface GameEventDeclarations {
     hero_picker_shown: object;
     hero_picker_hidden: object;
     dota_local_quickbuy_changed: object;
-    show_center_message: ShowCenterMessageEvent;
     hud_flip_changed: HudFlipChangedEvent;
     frosty_points_updated: object;
     defeated: DefeatedEvent;
     reset_defeated: object;
     booster_state_updated: object;
-    custom_game_difficulty: CustomGameDifficultyEvent;
     tree_cut: TreeCutEvent;
     ugc_details_arrived: UgcDetailsArrivedEvent;
     ugc_subscribed: UgcSubscribedEvent;
@@ -430,6 +429,7 @@ interface GameEventDeclarations {
     dota_hero_teleport_to_unit: DotaHeroTeleportToUnitEvent;
     dota_neutral_creep_camp_cleared: DotaNeutralCreepCampClearedEvent;
     dota_watch_tower_captured: DotaWatchTowerCapturedEvent;
+    dota_team_kill_credit: DotaTeamKillCreditEvent;
     npc_spawned: NpcSpawnedEvent;
     npc_spawn_finished: NpcSpawnFinishedEvent;
     npc_replaced: NpcReplacedEvent;
@@ -442,7 +442,6 @@ interface GameEventDeclarations {
      * The specified channel has had players leave or join.
      */
     chat_members_changed: ChatMembersChangedEvent;
-    dota_team_kill_credit: DotaTeamKillCreditEvent;
 }
 /**
  * Send once a server starts.
@@ -665,6 +664,7 @@ interface PlayerTeamEvent {
      * Team change because player disconnects.
      */
     disconnect: 0 | 1;
+    silent: 0 | 1;
     name: string;
     isbot: 0 | 1;
 }
@@ -916,12 +916,26 @@ interface HltvTitleEvent {
  */
 interface HltvChatEvent {
     text: string;
-    name: string;
+    /**
+     * Steam id.
+     */
     steamID: number;
+    name: string;
 }
 
 interface HltvVersioninfoEvent {
     version: number;
+}
+
+interface HltvReplayEvent {
+    /**
+     * Number of seconds in killer replay delay.
+     */
+    delay: number;
+    /**
+     * Reason for replay    (ReplayEventType_t).
+     */
+    reason: number;
 }
 
 interface DemoStartEvent {
@@ -1066,6 +1080,15 @@ interface PlayerHintmessageEvent {
 }
 
 interface BreakBreakableEvent {
+    entindex: EntityIndex;
+    userid: EntityIndex;
+    /**
+     * BREAK_GLASS, BREAK_WOOD, etc.
+     */
+    material: number;
+}
+
+interface BrokenBreakableEvent {
     entindex: EntityIndex;
     userid: EntityIndex;
     /**
@@ -1225,16 +1248,6 @@ interface EntityVisibleEvent {
     entityname: string;
 }
 
-/**
- * The player pressed use but a use entity wasn't found.
- */
-interface PlayerUseMissEvent {
-    /**
-     * Playerslot of user.
-     */
-    userid: EntityIndex;
-}
-
 interface FlareIgniteNpcEvent {
     /**
      * Entity ignited.
@@ -1246,7 +1259,7 @@ interface PhysgunPickupEvent {
     /**
      * Entity picked up.
      */
-    entindex: EntityIndex;
+    target: EntityIndex;
 }
 
 interface InventoryUpdatedEvent {
@@ -1526,6 +1539,12 @@ interface DotaRoshanKillEvent {
     gold: number;
 }
 
+interface DotaMinibossKillEvent {
+    shard_recipient_id: number;
+    teamnumber: number;
+    gold: number;
+}
+
 interface DotaCourierLostEvent {
     killerid: number;
     teamnumber: number;
@@ -1673,6 +1692,7 @@ interface DotaPlayerTakeTowerDamageEvent {
 interface DotaHudErrorMessageEvent {
     reason: number;
     message: string;
+    sequenceNumber: number;
 }
 
 interface DotaTeamNeutralStashItemsChangedEvent {
@@ -2093,22 +2113,12 @@ interface AntiaddictionToastEvent {
     duration: number;
 }
 
-interface ShowCenterMessageEvent {
-    message: string;
-    duration: number;
-    clear_message_queue: 0 | 1;
-}
-
 interface HudFlipChangedEvent {
     flipped: 0 | 1;
 }
 
 interface DefeatedEvent {
     entindex: EntityIndex;
-}
-
-interface CustomGameDifficultyEvent {
-    difficulty: number;
 }
 
 interface TreeCutEvent {
@@ -2367,6 +2377,13 @@ interface DotaWatchTowerCapturedEvent {
     old_team_number: number;
 }
 
+interface DotaTeamKillCreditEvent {
+    killer_userid: EntityIndex;
+    victim_userid: EntityIndex;
+    teamnumber: number;
+    herokills: number;
+}
+
 interface NpcSpawnedEvent {
     entindex: EntityIndex;
     is_respawn: number;
@@ -2401,11 +2418,4 @@ interface ChatNewMessageEvent {
  */
 interface ChatMembersChangedEvent {
     channel: number;
-}
-
-interface DotaTeamKillCreditEvent {
-    killer_userid: EntityIndex;
-    victim_userid: EntityIndex;
-    teamnumber: number;
-    herokills: number;
 }
