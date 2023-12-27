@@ -1,12 +1,10 @@
 /** @noSelfInFile */
 // @validateApiUsageDefault server
 
-declare const CBaseAnimating: DotaConstructor<CBaseAnimating>;
+/** @both */
+declare const CBaseAnimatingActivity: DotaConstructor<CBaseAnimatingActivity>;
 
-/** @client */
-declare const C_BaseAnimating: typeof CBaseAnimating;
-
-declare interface CBaseAnimating extends CBaseModelEntity {
+declare interface CBaseAnimatingActivity extends CBaseModelEntity {
     /**
      * Returns the duration in seconds of the active sequence.
      */
@@ -15,10 +13,6 @@ declare interface CBaseAnimating extends CBaseModelEntity {
      * Get the cycle of the animation.
      */
     GetCycle(): number;
-    /**
-     * Get the value of the given animGraph parameter.
-     */
-    GetGraphParameter(param: string): object;
     /**
      * Returns the name of the active sequence.
      */
@@ -39,6 +33,29 @@ declare interface CBaseAnimating extends CBaseModelEntity {
      * Set the cycle of the animation.
      */
     SetCycle(cycle: number): void;
+    /**
+     * Set the specified pose parameter to the specified value.
+     */
+    SetPoseParameter(name: string, value: number): number;
+    /**
+     * Sets the active sequence by name, keeping the current cycle.
+     */
+    SetSequence(sequenceName: string): void;
+    /**
+     * Stop the current animation by setting playback rate to 0.0.
+     */
+    StopAnimation(): void;
+    __kind__: 'instance';
+}
+
+/** @both */
+declare const CBaseAnimGraph: DotaConstructor<CBaseAnimGraph>;
+
+declare interface CBaseAnimGraph extends CBaseModelEntity {
+    /**
+     * Get the value of the given animGraph parameter.
+     */
+    GetGraphParameter(param: string): object;
     /**
      * Pass the desired look target in world space to the graph.
      */
@@ -67,18 +84,6 @@ declare interface CBaseAnimating extends CBaseModelEntity {
      * Pass the vector value to the specified param in the graph.
      */
     SetGraphParameterVector(name: string, value: Vector): void;
-    /**
-     * Set the specified pose parameter to the specified value.
-     */
-    SetPoseParameter(name: string, value: number): number;
-    /**
-     * Sets the active sequence by name, keeping the current cycle.
-     */
-    SetSequence(sequenceName: string): void;
-    /**
-     * Stop the current animation by setting playback rate to 0.0.
-     */
-    StopAnimation(): void;
     __kind__: 'instance';
 }
 
@@ -149,6 +154,10 @@ declare interface CBaseEntity extends CEntityInstance {
     FirstMoveChild(): CBaseEntity;
     FollowEntity(entity: CBaseEntity, boneMerge: boolean): void;
     /**
+     * HEntity to follow, string BoneOrAttachName.
+     */
+    FollowEntityMerge(ent: object, boneOrAttachName: string): void;
+    /**
      * Returns a table containing the criteria that would be used for response queries
      * on this entity. This is the same as the table that is passed to response rule
      * script function callbacks.
@@ -206,6 +215,10 @@ declare interface CBaseEntity extends CEntityInstance {
      */
     GetHealth(): number;
     /**
+     * Get the left vector of the entity.
+     */
+    GetLeftVector(): Vector;
+    /**
      * Get entity local pitch, yaw, roll as a QAngle.
      */
     GetLocalAngles(): QAngle;
@@ -250,7 +263,9 @@ declare interface CBaseEntity extends CEntityInstance {
      */
     GetOwnerEntity(): CBaseEntity;
     /**
-     * Get the right vector of the entity.
+     * Get the right vector of the entity. WARNING: This produces a left-handed
+     * coordinate system. Use GetLeftVector instead (which is aligned with the y axis
+     * of the entity).
      */
     GetRightVector(): Vector;
     /**
@@ -479,7 +494,7 @@ declare const CBaseFlex: DotaConstructor<CBaseFlex>;
 /** @client */
 declare const C_BaseFlex: typeof CBaseFlex;
 
-declare interface CBaseFlex extends CBaseAnimating {
+declare interface CBaseFlex extends CBaseAnimatingActivity {
     /**
      * Returns the instance of the oldest active scene entity (if any).
      */
@@ -662,37 +677,13 @@ declare interface CBodyComponent {
      */
     DetachFromParent(): void;
     /**
-     * Returns the active sequence.
-     *
-     * @both
-     */
-    GetSequence(): number;
-    /**
      * Is attached to parent.
      *
      * @both
      */
     IsAttachedToParent(): boolean;
-    /**
-     * Returns a sequence id given a name.
-     *
-     * @both
-     */
-    LookupSequence(arg1: string): number;
-    /**
-     * Returns the duration in seconds of the specified sequence.
-     *
-     * @both
-     */
-    SequenceDuration(arg1: string): number;
     /** @both */
     SetAngularVelocity(arg1: Vector): void;
-    /**
-     * Pass string for the animation to play on this model.
-     *
-     * @both
-     */
-    SetAnimation(arg1: string): void;
     /** @both */
     SetMaterialGroup(arg1: string): void;
     /** @both */
@@ -769,7 +760,7 @@ declare interface CCustomNetTableManager {
     GetTableValue<
         TName extends keyof CustomNetTableDeclarations,
         T extends CustomNetTableDeclarations[TName],
-        K extends keyof T
+        K extends keyof T,
     >(
         tableName: TName,
         keyName: K,
@@ -777,7 +768,7 @@ declare interface CCustomNetTableManager {
     SetTableValue<
         TName extends keyof CustomNetTableDeclarations,
         T extends CustomNetTableDeclarations[TName],
-        K extends keyof T
+        K extends keyof T,
     >(
         tableName: TName,
         keyName: K,
@@ -797,7 +788,7 @@ declare interface CDebugOverlayScriptHelper {
      *
      * @both
      */
-    Axis(arg1: Vector, arg2: never, arg3: number, arg4: boolean, arg5: number): void;
+    Axis(arg1: Vector, arg2: unknown, arg3: number, arg4: boolean, arg5: number): void;
     /**
      * Draws a world-space axis-aligned box. Specify bounds in world space.
      *
@@ -822,7 +813,7 @@ declare interface CDebugOverlayScriptHelper {
         arg1: Vector,
         arg2: Vector,
         arg3: Vector,
-        arg4: never,
+        arg4: unknown,
         arg5: number,
         arg6: number,
         arg7: number,
@@ -837,7 +828,7 @@ declare interface CDebugOverlayScriptHelper {
      */
     Capsule(
         arg1: Vector,
-        arg2: never,
+        arg2: unknown,
         arg3: number,
         arg4: number,
         arg5: number,
@@ -854,7 +845,7 @@ declare interface CDebugOverlayScriptHelper {
      */
     Circle(
         arg1: Vector,
-        arg2: never,
+        arg2: unknown,
         arg3: number,
         arg4: number,
         arg5: number,
@@ -932,7 +923,7 @@ declare interface CDebugOverlayScriptHelper {
      */
     Cross3DOriented(
         arg1: Vector,
-        arg2: never,
+        arg2: unknown,
         arg3: number,
         arg4: number,
         arg5: number,
@@ -1119,7 +1110,7 @@ declare interface CDebugOverlayScriptHelper {
         arg2: Vector,
         arg3: Vector,
         arg4: Vector,
-        arg5: never,
+        arg5: unknown,
         arg6: number,
         arg7: number,
         arg8: number,
@@ -1182,7 +1173,7 @@ declare interface CDebugOverlayScriptHelper {
      */
     VectorText3D(
         arg1: Vector,
-        arg2: never,
+        arg2: unknown,
         arg3: string,
         arg4: number,
         arg5: number,
@@ -1305,6 +1296,8 @@ declare interface CDOTA_Ability_Lua extends CDOTABaseAbility {
      * @both
      */
     CastFilterResultTarget(target: CDOTA_BaseNPC): UnitFilterResult;
+    /** @both */
+    GetAbilityChargeRestoreTime(level: number): number;
     /**
      * Allows code overriding of the ability texture shown in the HUD.
      *
@@ -1362,6 +1355,12 @@ declare interface CDOTA_Ability_Lua extends CDOTABaseAbility {
      */
     GetChannelledManaCostPerSecond(level: number): number;
     /**
+     * Return the channel start time of this ability.
+     *
+     * @both
+     */
+    GetChannelStartTime(): number;
+    /**
      * Return the channel time of this ability.
      *
      * @both
@@ -1396,6 +1395,12 @@ declare interface CDOTA_Ability_Lua extends CDOTABaseAbility {
      */
     GetCustomCastErrorTarget(target: CDOTA_BaseNPC): string;
     /**
+     * (DOTA_INVALID_ORDERS nReason) Return the error string of a failed order.
+     *
+     * @both
+     */
+    GetCustomHudErrorMessage(reason: number): string;
+    /**
      * Return cast range of this ability, accounting for modifiers.
      *
      * @both
@@ -1421,6 +1426,12 @@ declare interface CDOTA_Ability_Lua extends CDOTABaseAbility {
      * Return the animation rate of the cast animation.
      */
     GetPlaybackRateOverride(): number;
+    /**
+     * Is this ability an Attribute Bonus.
+     *
+     * @both
+     */
+    IsAttributeBonus(): boolean;
     /**
      * Is this a cosmetic only ability?
      */
@@ -1455,6 +1466,7 @@ declare interface CDOTA_Ability_Lua extends CDOTABaseAbility {
      * The ability was pinged.
      */
     OnAbilityPinged(playerId: PlayerID, ctrlHeld: boolean): void;
+    OnAbilityUpgrade(upgradeAbility: object): void;
     /**
      * Channel finished.
      */
@@ -1967,12 +1979,6 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
      */
     GetLevel(): number;
     /**
-     * Returns current magical armor value.
-     *
-     * @both
-     */
-    GetMagicalArmorValue(): number;
-    /**
      * Returns the player ID of the controlling player.
      */
     GetMainControllingPlayer(): number;
@@ -2073,6 +2079,7 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
     GetProjectileSpeed(): number;
     GetRangedProjectileName(): string;
     GetRangeToUnit(npc: CDOTA_BaseNPC): number;
+    GetRemainingPathLength(): number;
     /** @both */
     GetSecondsPerAttack(): number;
     GetSpellAmplification(baseOnly: boolean): number;
@@ -2244,6 +2251,8 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
     IsDominated(): boolean;
     /** @both */
     IsEvadeDisabled(): boolean;
+    /** @both */
+    IsFeared(): boolean;
     /**
      * Is this unit an Ancient?
      *
@@ -2258,6 +2267,10 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
      * @both
      */
     IsHero(): this is CDOTA_BaseNPC_Hero;
+    /**
+     * Is this a Hero Ward?
+     */
+    IsHeroWard(): boolean;
     /** @both */
     IsHexed(): boolean;
     /**
@@ -2351,6 +2364,8 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
     /** @both */
     IsSpeciallyUndeniable(): boolean;
     /** @both */
+    IsStrongIllusion(): boolean;
+    /** @both */
     IsStunned(): boolean;
     /**
      * Is this unit summoned?
@@ -2358,6 +2373,8 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
      * @both
      */
     IsSummoned(): boolean;
+    /** @both */
+    IsTaunted(): boolean;
     IsTempestDouble(): this is CDOTA_BaseNPC_Hero;
     /**
      * Is this a tower?
@@ -2368,8 +2385,14 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
     IsUnableToMiss(): boolean;
     /** @both */
     IsUnselectable(): boolean;
-    /** @both */
+    /** @client */
     IsUntargetable(): boolean;
+    /** @both */
+    IsUntargetableFrom(targettingSource: object): boolean;
+    /**
+     * Is this a Ward?
+     */
+    IsWard(): boolean;
     /**
      * Is this entity an Undying Zombie?
      */
@@ -2429,6 +2452,10 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
     NotOnMinimapForEnemies(): boolean;
     /** @both */
     NoUnitCollision(): boolean;
+    /**
+     * Tells the underlying AI to move in the given direction, skipping Dota orders.
+     */
+    OnCommandMoveToDirection(pos: Vector): void;
     /** @both */
     PassivesDisabled(): boolean;
     /**
@@ -2523,11 +2550,6 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
         callbackInfo: TCallbackInfo,
     ): void;
     /**
-     * Remove mana from this unit, this can be used for involuntary mana loss, not for
-     * mana that is spent.
-     */
-    ReduceMana(amount: number): void;
-    /**
      * Remove an ability from this unit by name.
      */
     RemoveAbility(abilityName: string): void;
@@ -2576,8 +2598,19 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
      * @both
      */
     Script_GetAttackRange(): number;
+    /**
+     * Returns current magical armor value.
+     *
+     * @both
+     */
+    Script_GetMagicalArmorValue(useExperimentalFormula: boolean, inflictor: object): number;
     /** @both */
     Script_IsDeniable(): boolean;
+    /**
+     * Remove mana from this unit, this can be used for involuntary mana loss, not for
+     * mana that is spent.
+     */
+    Script_ReduceMana(mana: number, ability: object): number;
     /**
      * Sells the passed item in this unit's inventory.
      */
@@ -2712,6 +2745,7 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
      * Sets the client side map reveal radius for this unit.
      */
     SetRevealRadius(revealRadius: number): void;
+    SetShouldComputeRemainingPathLength(compute: boolean): void;
     SetShouldDoFlyHeightVisual(shouldVisuallyFly: boolean): void;
     SetStolenScepter(stolenScepter: boolean): void;
     SetUnitCanRespawn(canRespawn: boolean): void;
@@ -2738,6 +2772,11 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
      * Add the given gesture activity faded according to to the parameters.
      */
     StartGestureWithFade(activity: GameActivity_t, fadeIn: number, fadeOut: number): void;
+    /**
+     * Add the given gesture activity faded according to to the parameters and with a
+     * playback rate override.
+     */
+    StartGestureWithFadeAndPlaybackRate(activity: number, fadeIn: number, fadeOut: number, rate: number): void;
     /**
      * Add the given gesture activity with a playback rate override.
      */
@@ -3170,6 +3209,12 @@ declare interface CDOTA_BaseNPC_Hero extends CDOTA_BaseNPC {
     __kind__: 'instance';
 }
 
+declare const CDOTA_BaseNPC_MangoTree: DotaConstructor<CDOTA_BaseNPC_MangoTree>;
+
+declare interface CDOTA_BaseNPC_MangoTree extends CDOTA_BaseNPC_Building {
+    __kind__: 'instance';
+}
+
 declare const CDOTA_BaseNPC_NeutralItemStash: DotaConstructor<CDOTA_BaseNPC_NeutralItemStash>;
 
 declare interface CDOTA_BaseNPC_NeutralItemStash extends CDOTA_BaseNPC_Building {
@@ -3450,7 +3495,7 @@ declare interface CDOTA_Item extends CDOTABaseAbility {
     IsSellable(): boolean;
     /** @both */
     IsStackable(): boolean;
-    LaunchLoot(autoUse: boolean, height: number, duration: number, endPoint: Vector): void;
+    LaunchLoot(autoUse: boolean, height: number, duration: number, endPoint: Vector, teleportOwner: object): void;
     LaunchLootInitialHeight(
         autoUse: boolean,
         initialHeight: number,
@@ -3636,6 +3681,12 @@ declare interface CDOTA_Item_Lua extends CDOTA_Item {
      */
     GetChannelledManaCostPerSecond(level: number): number;
     /**
+     * Return the channel start time of this ability.
+     *
+     * @both
+     */
+    GetChannelStartTime(): number;
+    /**
      * Return the channel time of this ability.
      *
      * @both
@@ -3669,6 +3720,12 @@ declare interface CDOTA_Item_Lua extends CDOTA_Item {
      * @both
      */
     GetCustomCastErrorTarget(target: CDOTA_BaseNPC): string;
+    /**
+     * (DOTA_INVALID_ORDERS nReason) Return the error string of a failed order.
+     *
+     * @both
+     */
+    GetCustomHudErrorMessage(reason: number): string;
     /**
      * Return cast range of this ability, taking modifiers into account.
      *
@@ -3818,7 +3875,7 @@ declare interface CDOTA_Item_Lua extends CDOTA_Item {
 
 declare const CDOTA_Item_Physical: DotaConstructor<CDOTA_Item_Physical>;
 
-declare interface CDOTA_Item_Physical extends CBaseAnimating {
+declare interface CDOTA_Item_Physical extends CBaseAnimatingActivity {
     /**
      * Returned the contained item.
      */
@@ -3866,10 +3923,8 @@ declare interface CDOTA_MapTree extends CBaseEntity {
     __kind__: 'instance';
 }
 
+/** @both */
 declare const CDOTA_Modifier_Lua: DotaConstructor<CDOTA_Modifier_Lua>;
-
-/** @client */
-declare const C_DOTA_Modifier_Lua: typeof CDOTA_Modifier_Lua;
 
 declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
     /**
@@ -4274,6 +4329,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierAvoidDamageAfterReductions?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierAvoidSpell?(event: ModifierAttackEvent): 0 | 1;
     /**
      * @abstract
@@ -4454,6 +4514,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierExtraManaBonusPercentage?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierExtraManaPercentage?(): void;
     /**
      * @abstract
@@ -4479,7 +4544,17 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierHealthBarPips?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierHealthBonus?(): number;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierHealthcostReduction_Constant?(): void;
     /**
      * @abstract
      * @both
@@ -4559,6 +4634,16 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierIsRatPack?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierKnockbackAmplification_Percentage?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierLifestealRegenAmplify_Percentage?(): void;
     /**
      * @abstract
@@ -4580,6 +4665,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @both
      */
     GetModifierMagicalResistanceBonusIllusions?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierMagicalResistanceBonusUnique?(): void;
     /**
      * @abstract
      * @both
@@ -4630,6 +4720,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @both
      */
     GetModifierModelScale?(): number;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierModelScaleAnimateTime?(): void;
     /**
      * @abstract
      * @both
@@ -4771,6 +4866,16 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierPercentageHealthcost?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierPercentageHealthcostStacking?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierPercentageManacost?(event: ModifierAbilityEvent): number;
     /**
      * @abstract
@@ -4834,6 +4939,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @both
      */
     GetModifierPhysicalArmorTotal_Percentage?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierPhysicalDamageOutgoing_Percentage?(): void;
     /**
      * @abstract
      * @both
@@ -4923,6 +5033,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierPropertyIncomingDamage_Constant?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierProvidesFOWVision?(): 0 | 1;
     /**
      * @abstract
@@ -4961,6 +5076,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @both
      */
     GetModifierSpellLifestealRegenAmplify_Percentage?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierSpellRedirectTarget?(): void;
     /**
      * @abstract
      * @both
@@ -5035,6 +5155,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierTurnRateConstant?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierUnitDisllowUpgrading?(): 0 | 1;
     /**
      * @abstract
@@ -5101,6 +5226,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @both
      */
     GetVisualZDelta?(): number;
+    /**
+     * @abstract
+     * @both
+     */
+    GetVisualZSpeedBaseOverride?(): void;
     /**
      * @abstract
      * @both
@@ -5212,6 +5342,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    OnDeathCompleted?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     OnDominated?(event: ModifierUnitEvent): void;
     /**
      * @abstract
@@ -5292,7 +5427,17 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    OnSpellAppliedSuccessfully?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     OnSpellTargetReady?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    OnSpentHealth?(): void;
     /**
      * @abstract
      * @both
@@ -5473,6 +5618,7 @@ declare interface CDOTA_PlayerResource extends CBaseEntity {
     ClearKillsMatrix(playerId: PlayerID): void;
     ClearLastHitMultikill(playerId: PlayerID): void;
     ClearLastHitStreak(playerId: PlayerID): void;
+    ClearPlayer(playerId: PlayerID): void;
     ClearRawPlayerDamageMatrix(playerId: PlayerID): void;
     ClearStreak(playerId: PlayerID): void;
     GetAegisPickups(playerId: PlayerID): number;
@@ -5493,8 +5639,6 @@ declare interface CDOTA_PlayerResource extends CBaseEntity {
     GetDamageDoneToHero(playerId: PlayerID, victimId: PlayerID): number;
     GetDeaths(playerId: PlayerID): number;
     GetDenies(playerId: PlayerID): number;
-    GetEventGameCustomActionClaimCount(playerId: PlayerID, unActionId: number): number;
-    GetEventGameCustomActionClaimCountByName(playerId: PlayerID, actionName: string): number;
     /**
      * (nPlayerID).
      */
@@ -5524,6 +5668,8 @@ declare interface CDOTA_PlayerResource extends CBaseEntity {
     GetLiveSpectatorTeam(playerId: PlayerID): DOTATeam_t | -1;
     GetMisses(playerId: PlayerID): number;
     GetNearbyCreepDeaths(playerId: PlayerID): number;
+    GetNetworkedEventActionClaimCount(playerId: PlayerID, eventId: number, unActionId: number): number;
+    GetNetworkedEventActionClaimCountByName(playerId: PlayerID, eventId: number, actionName: string): number;
     GetNetWorth(playerId: PlayerID): number;
     GetNthCourierForTeam(courierIndex: number, teamNumber: DOTATeam_t): CDOTA_Unit_Courier | undefined;
     GetNthPlayerIDOnTeam(teamNumber: DOTATeam_t, nthPlayer: number): PlayerID;
@@ -5593,7 +5739,7 @@ declare interface CDOTA_PlayerResource extends CBaseEntity {
     HasCustomGameTicketForPlayerID(playerId: PlayerID): boolean;
     HasRandomed(playerId: PlayerID): boolean;
     HasSelectedHero(playerId: PlayerID): boolean;
-    HasSetEventGameCustomActionClaimCount(): boolean;
+    HasSetNetworkedEventActionClaimCount(): boolean;
     HaveAllPlayersJoined(): boolean;
     IncrementAssists(playerId: PlayerID, victimId: PlayerID): void;
     IncrementClaimedDenies(playerId: PlayerID, value: number): void;
@@ -5788,6 +5934,12 @@ declare interface CDOTA_Unit_Nian extends CDOTA_BaseNPC_Creature {
     __kind__: 'instance';
 }
 
+declare const CDOTA_Unit_Scout: DotaConstructor<CDOTA_Unit_Scout>;
+
+declare interface CDOTA_Unit_Scout extends CDOTA_BaseNPC {
+    __kind__: 'instance';
+}
+
 declare const CDOTABaseAbility: DotaConstructor<CDOTABaseAbility>;
 
 /** @client */
@@ -5799,11 +5951,13 @@ declare interface CDOTABaseAbility extends CBaseEntity {
     ContinueCasting(): boolean;
     CreateVisibilityNode(location: Vector, radius: number, duration: number): void;
     DecrementModifierRefCount(): void;
+    EnableAbilityChargesOnTalentUpgrade(ability: object, talentName: string): void;
     EndChannel(interrupted: boolean): void;
     /**
      * Clear the cooldown remaining on this ability.
      */
     EndCooldown(): void;
+    GetAbilityChargeRestoreTime(level: number): number;
     GetAbilityDamage(): number;
     GetAbilityDamageType(): DAMAGE_TYPES;
     GetAbilityIndex(): number;
@@ -5851,6 +6005,7 @@ declare interface CDOTABaseAbility extends CBaseEntity {
      * Gets the cast range of the ability.
      */
     GetCastRange(location: Vector | undefined, target: CDOTA_BaseNPC | undefined): number;
+    GetChannelledHealthCostPerSecond(level: number): number;
     GetChannelledManaCostPerSecond(level: number): number;
     GetChannelStartTime(): number;
     GetChannelTime(): number;
@@ -5878,8 +6033,11 @@ declare interface CDOTABaseAbility extends CBaseEntity {
      */
     GetEffectiveCastRange(location: Vector, target: object): number;
     GetEffectiveCooldown(level: number): number;
+    GetEffectiveHealthCost(level: number): number;
+    GetEffectiveManaCost(level: number): number;
     GetGoldCost(level: number): number;
     GetGoldCostForUpgrade(level: number): number;
+    GetHealthCost(level: number): number;
     GetHeroLevelRequiredToUpgrade(): number;
     GetInitialAbilityCharges(level: number): number;
     GetIntrinsicModifierName(): string;
@@ -5979,15 +6137,14 @@ declare interface CDOTABaseAbility extends CBaseEntity {
     OnUpgrade(): void;
     PayGoldCost(): void;
     PayGoldCostForUpgrade(): void;
+    PayHealthCost(): void;
     PayManaCost(): void;
     PlaysDefaultAnimWhenStolen(): boolean;
     ProcsMagicStick(): boolean;
     RefCountsModifiers(): boolean;
     RefreshCharges(): void;
-    /**
-     * Returns true if ability has intrinsic modifier.
-     */
-    RefreshIntrinsicModifier(): boolean;
+    RefreshIntrinsicModifier(): void;
+    RefundHealthCost(): void;
     RefundManaCost(): void;
     RequiresFacing(): boolean;
     ResetToggleOnRespawn(): boolean;
@@ -6014,7 +6171,7 @@ declare interface CDOTABaseAbility extends CBaseEntity {
     ToggleAbility(): void;
     ToggleAutoCast(): void;
     UpgradeAbility(supressSpeech: boolean): void;
-    UseResources(mana: boolean, gold: boolean, cooldown: boolean): void;
+    UseResources(mana: boolean, useHealth: boolean, gold: boolean, cooldown: boolean): void;
     __kind__: 'instance';
 }
 
@@ -6117,6 +6274,11 @@ declare interface CDOTABaseGameMode extends CBaseEntity {
      * Are in-game announcers disabled?
      */
     GetAnnouncerDisabled(): boolean;
+    /**
+     * Is the announcer announcing the mode / saying Choose Your Hero on start of
+     * custom games disabled?
+     */
+    GetAnnouncerGameModeAnnounceDisabled(): boolean;
     /**
      * Set a different camera distance; dota default is 1134.
      */
@@ -6307,6 +6469,11 @@ declare interface CDOTABaseGameMode extends CBaseEntity {
      */
     SetAnnouncerDisabled(disabled: boolean): void;
     /**
+     * Disables the announcer announcing the mode / saying Choose Your Hero on start
+     * of custom games.
+     */
+    SetAnnouncerGameModeAnnounceDisabled(disabled: boolean): void;
+    /**
      * Set if the bots should try their best to push with a human player.
      */
     SetBotsAlwaysPushWithHuman(alwaysPush: boolean): void;
@@ -6433,6 +6600,10 @@ declare interface CDOTABaseGameMode extends CBaseEntity {
      * hero dies.
      */
     SetDeathOverlayDisabled(disabled: boolean): void;
+    /**
+     * Disables chat tips on death.
+     */
+    SetDeathTipsDisabled(disabled: boolean): void;
     /**
      * Sets the default sticky item in the quickbuy.
      */
@@ -6711,6 +6882,10 @@ declare interface CDOTABaseGameMode extends CBaseEntity {
      * Set if weather effects are disabled.
      */
     SetWeatherEffectsDisabled(disable: boolean): void;
+    /**
+     * Set xp rune spawn rate.
+     */
+    SetXPRuneSpawnInterval(interval: number): void;
     ShouldGiveFreeTPOnDeath(): boolean;
     __kind__: 'instance';
 }
@@ -7002,6 +7177,12 @@ declare interface CDOTAGameRules {
      */
     GetMatchSignoutComplete(): boolean;
     /**
+     * Gets the extra offset to initial neutral creep spawn delay.
+     *
+     * @both
+     */
+    GetNeutralInitialSpawnOffset(): number;
+    /**
      * Gets next bounty rune spawn time.
      */
     GetNextBountyRuneSpawnTime(): number;
@@ -7082,6 +7263,14 @@ declare interface CDOTAGameRules {
      */
     IsNightstalkerNight(): boolean;
     /**
+     * Returns whether Dota Plus ability suggestions are enabled or disabled.
+     */
+    IsSuggestAbilitiesEnabled(): boolean;
+    /**
+     * Returns whether Dota Plus item suggestions are enabled or disabled.
+     */
+    IsSuggestItemsEnabled(): boolean;
+    /**
      * Is it temporarily night-time?
      */
     IsTemporaryNight(): boolean;
@@ -7153,6 +7342,10 @@ declare interface CDOTAGameRules {
      * Restart gametime from 0.
      */
     ResetGameTime(): void;
+    /**
+     * Resets the player of a given ID.
+     */
+    ResetPlayer(arg1: number): void;
     /**
      * Restart at custom game setup.
      */
@@ -7268,10 +7461,6 @@ declare interface CDOTAGameRules {
      */
     SetFirstBloodActive(active: boolean): void;
     /**
-     * Freeze the game time.
-     */
-    SetGameTimeFrozen(frozen: boolean): void;
-    /**
      * Makes the specified team win.
      */
     SetGameWinner(team: DOTATeam_t): void;
@@ -7324,6 +7513,10 @@ declare interface CDOTAGameRules {
      */
     SetItemStockCount(count: number, team: DOTATeam_t, itemName: string, playerId: PlayerID): void;
     /**
+     * Sets the extra offset to initial neutral creep spawn delay.
+     */
+    SetNeutralInitialSpawnOffset(arg1: number): void;
+    /**
      * Sets next bounty rune spawn time.
      */
     SetNextBountyRuneSpawnTime(arg1: number): void;
@@ -7335,6 +7528,18 @@ declare interface CDOTAGameRules {
      * Show this unit's health on the overlay health bar.
      */
     SetOverlayHealthBarUnit(unit: CDOTA_BaseNPC, style: number): void;
+    /**
+     * Set columns to show in post game.
+     */
+    SetPostGameColumns(arg1: object): boolean;
+    /**
+     * Configure post game to be single or double column layout.
+     */
+    SetPostGameLayout(arg1: number): void;
+    /**
+     * Set score value for each team. First element is for DOTA_TEAM_GOODGUYS.
+     */
+    SetPostGameTeamScores(arg1: object): boolean;
     /**
      * Sets the amount of time players have between the game ending and the server
      * disconnecting them.
@@ -7382,6 +7587,14 @@ declare interface CDOTAGameRules {
      * the showcase phase.
      */
     SetStrategyTime(time: number): void;
+    /**
+     * Sets Dota Plus ability suggestions enabled or disabled.
+     */
+    SetSuggestAbilitiesEnabled(arg1: boolean): void;
+    /**
+     * Sets Dota Plus ability item enabled or disabled.
+     */
+    SetSuggestItemsEnabled(arg1: boolean): void;
     /**
      * Set the time of day.
      */
@@ -7437,20 +7650,29 @@ declare interface CDOTAGameRules {
 
 declare const CDOTAPlayerController: DotaConstructor<CDOTAPlayerController>;
 
-declare interface CDOTAPlayerController extends CBaseAnimating {
+/** @client */
+declare const C_DOTAPlayerController: typeof CDOTAPlayerController;
+
+declare interface CDOTAPlayerController extends CBaseAnimatingActivity {
     /**
      * Attempt to spawn the appropriate couriers for this mode.
      */
     CheckForCourierSpawning(hero: CDOTA_BaseNPC_Hero): object;
+    /** @client */
+    GetActiveAbility(): object;
     /**
      * Get the player's hero.
      */
     GetAssignedHero(): CDOTA_BaseNPC_Hero;
+    /** @client */
+    GetClickBehaviors(): unknown;
     /**
      * Get the player's official PlayerID; notably is -1 when the player isn't yet on
      * a team.
      */
     GetPlayerID(): PlayerID;
+    /** @client */
+    GetQueryUnit(): object;
     /**
      * Randoms this player's hero.
      */
@@ -7472,6 +7694,8 @@ declare interface CDOTAPlayerController extends CBaseAnimating {
      * Sets this player's hero selection.
      */
     SetSelectedHero(heroName: string): void;
+    /** @client */
+    ShouldDisplayInWorldUIElements(): boolean;
     /**
      * Spawn a courier for this player at the given position.
      */
@@ -7577,10 +7801,6 @@ declare interface CDOTATutorial {
      */
     ForceGameStart(): void;
     /**
-     * Is our time frozen?
-     */
-    GetTimeFrozen(): boolean;
-    /**
      * Is this item currently in the white list.
      */
     IsItemInWhiteList(itemName: string): boolean;
@@ -7614,10 +7834,6 @@ declare interface CDOTATutorial {
      * Set the shop open or closed.
      */
     SetShopOpen(open: boolean): void;
-    /**
-     * Set if we should freeze time or not.
-     */
-    SetTimeFrozen(timeFrozen: boolean): void;
     /**
      * Set a tutorial convar.
      */
@@ -7772,14 +7988,20 @@ declare interface CEntities {
     First(): CBaseEntity;
     /**
      * Get the local player controller (backcompat).
+     *
+     * @both
      */
     GetLocalPlayer(): CDOTAPlayerController;
     /**
      * Get the local player controller.
+     *
+     * @both
      */
     GetLocalPlayerController(): object;
     /**
      * Get the local player pawn.
+     *
+     * @both
      */
     GetLocalPlayerPawn(): object;
     /**
@@ -8182,7 +8404,7 @@ declare interface CParticleSystem extends CBaseModelEntity {
 
 declare const CPhysicsProp: DotaConstructor<CPhysicsProp>;
 
-declare interface CPhysicsProp extends CBaseAnimating {
+declare interface CPhysicsProp extends CBaseAnimatingActivity {
     /**
      * Disable motion for the prop.
      */
@@ -8480,33 +8702,45 @@ declare interface CScriptParticleManager {
     ): void;
     /** @both */
     SetParticleControlFallback(particle: ParticleID, controlPoint: number, vecPosition: Vector): void;
-    /** @both */
-    SetParticleControlForward(particle: ParticleID, controlPoint: number, forward: Vector): void;
     /**
-     * Set the orientation for a control on a particle effect (NOTE: This is left
-     * handed -- bad!!).
+     * [OBSOLETE - Use SetParticleControlTransformForward] (int nFXIndex, int nPoint,
+     * vForward).
+     *
+     * @both
+     */
+    SetParticleControlForward(particle: ParticleID, controlPoint: number, arg3: Vector): void;
+    /**
+     * [OBSOLETE - Use SetParticleControlTransform] (int nFXIndex, int nPoint,
+     * vForward, vRight, vUp) - Set the orientation for a control on a particle effect
+     * (NOTE: This is left handed -- bad!!).
      *
      * @both
      */
     SetParticleControlOrientation(
         particle: ParticleID,
         controlPoint: number,
-        forward: Vector,
-        right: Vector,
-        up: Vector,
+        arg3: Vector,
+        arg4: Vector,
+        arg5: Vector,
     ): void;
     /**
-     * Set the orientation for a control on a particle effect.
+     * [OBSOLETE - Use SetParticleControlTransform] (int nFXIndex, int nPoint, Vector
+     * vecForward, Vector vecLeft, Vector vecUp) - Set the orientation for a control
+     * on a particle effect.
      *
      * @both
      */
     SetParticleControlOrientationFLU(
         particle: ParticleID,
         controlPoint: number,
-        vecForward: Vector,
-        vecLeft: Vector,
-        vecUp: Vector,
+        arg3: Vector,
+        arg4: Vector,
+        arg5: Vector,
     ): void;
+    /** @both */
+    SetParticleControlTransform(fxIndex: number, point: number, origin: Vector, qAngles: QAngle): void;
+    /** @both */
+    SetParticleControlTransformForward(fxIndex: number, point: number, origin: Vector, forward: Vector): void;
     /** @both */
     SetParticleFoWProperties(particle: ParticleID, controlPoint: number, controlPoint2: number, radius: number): void;
     /** @both */
@@ -9117,22 +9351,22 @@ declare function CreateModifierThinker(
 /**
  * Create a rune of the specified type.
  */
-declare function CreateRune(location: Vector, runeType: DOTA_RUNES): CBaseAnimating;
+declare function CreateRune(location: Vector, runeType: DOTA_RUNES): CBaseAnimatingActivity;
 
 /**
  * Create a scene entity to play the specified scene.
  */
-declare function CreateSceneEntity(arg1: string): CSceneEntity;
+declare function CreateSceneEntity(arg1: string): CBaseAnimatingActivity;
 
 /**
  * Create a temporary tree, uses a default tree model.
  */
-declare function CreateTempTree(location: Vector, duration: number): CBaseAnimating;
+declare function CreateTempTree(location: Vector, duration: number): CBaseAnimatingActivity;
 
 /**
  * Create a temporary tree, specifying the tree model name.
  */
-declare function CreateTempTreeWithModel(location: Vector, duration: number, modelName: string): CBaseAnimating;
+declare function CreateTempTreeWithModel(location: Vector, duration: number, modelName: string): CBaseAnimatingActivity;
 
 /**
  * Creates and returns an AABB trigger.
@@ -9492,6 +9726,18 @@ declare function DropNeutralItemAtPositionForHero(
 ): CDOTA_Item_Physical;
 
 /**
+ * Drop a neutral item for the team of the hero at the given tier.
+ */
+declare function DropNeutralItemAtPositionForHeroWithOffset(
+    arg1: string,
+    arg2: Vector,
+    arg3: object,
+    arg4: number,
+    arg5: boolean,
+    arg6: Vector,
+): object;
+
+/**
  * A function to re-lookup a function by name every time.
  *
  * @both
@@ -9508,7 +9754,7 @@ declare function Dynamic_Wrap<
                     : never
                 : never
             : never;
-    }[keyof T]
+    }[keyof T],
 >(context: T, name: K): T[K];
 
 /**
@@ -9705,12 +9951,19 @@ declare function GetAbilityTextureNameForAbility(abilityName: string): string;
 declare function GetActiveSpawnGroupHandle(): SpawnGroupHandle;
 
 /**
+ * Returns a location for the unit that is not already occupied.
+ */
+declare function GetClearSpaceForUnit(arg1: object, arg2: Vector): Vector;
+
+/**
  * @deprecated This function is unsafe. Prefer using `GetDedicatedServerKeyV2`
  *             instead.
  */
 declare function GetDedicatedServerKey(version: string): string;
 
 declare function GetDedicatedServerKeyV2(version: string): string;
+
+declare function GetDedicatedServerKeyV3(version: string): string;
 
 /**
  * Get the enity index for a tree id specified as the entindex_target of a
@@ -9903,6 +10156,20 @@ declare function IsClient(): boolean;
 declare function IsDedicatedServer(): boolean;
 
 /**
+ * Returns true if whatever alt is remapped to is pressed.
+ *
+ * @client
+ */
+declare function IsDotaAltPressed(): unknown;
+
+/**
+ * Returns true if whatever ctrl is remapped to is pressed.
+ *
+ * @client
+ */
+declare function IsDotaCtrlPressed(): unknown;
+
+/**
  * Returns true if this is lua running within tools mode.
  *
  * @both
@@ -9917,7 +10184,7 @@ declare function IsLocationVisible(team: DOTATeam_t, location: Vector): boolean;
 /**
  * Is this entity a mango tree? (hEntity).
  */
-declare function IsMangoTree(entity: CBaseEntity): entity is CBaseAnimating;
+declare function IsMangoTree(entity: CBaseEntity): entity is CBaseAnimatingActivity;
 
 /**
  * Returns true if the entity is valid and marked for deletion.
@@ -10154,6 +10421,12 @@ declare function RandomInt(min: number, max: number): number;
 declare function RandomVector(length: number): Vector;
 
 /**
+ * Record in player resources that a new neutral item has been created, if it
+ * hasn't already been, and show a toast.
+ */
+declare function RecordNeutralItemEarned(arg1: object, arg2: object, arg3: number): void;
+
+/**
  * Register a custom animation script to run when a model loads.
  */
 declare function RegisterCustomAnimationScriptForModel(arg1: string, arg2: string): void;
@@ -10171,8 +10444,6 @@ declare function RegisterSpawnGroupFilterProxy(arg1: string): void;
  * @both
  */
 declare function ReloadMOTD(): void;
-
-declare function RemapValClamped(arg1: number, arg2: number, arg3: number, arg4: number, arg5: number): number;
 
 /**
  * Remove temporary vision for a given team.
@@ -10240,37 +10511,6 @@ declare function RotationDelta(arg1: QAngle, arg2: QAngle): QAngle;
 declare function RotationDeltaAsAngularVelocity(arg1: QAngle, arg2: QAngle): Vector;
 
 /**
- * Add a rule to the decision database.
- *
- * @both
- */
-declare function rr_AddDecisionRule(arg1: object): boolean;
-
-/**
- * Commit the result of QueryBestResponse back to the given entity to play. Call
- * with params.
- *
- * @both
- */
-declare function rr_CommitAIResponse(entity: object, airesponse: object): boolean;
-
-/**
- * Retrieve a table of all available expresser targets, in the form { name :
- * handle, name: handle }.
- *
- * @both
- */
-declare function rr_GetResponseTargets(): object;
-
-/**
- * Params: (entity, query) : tests 'query' against entity's response system and
- * returns the best response found (or null if none found).
- *
- * @both
- */
-declare function rr_QueryBestResponse(arg1: object, arg2: object, arg3: object): boolean;
-
-/**
  * Have Entity say string, and teamOnly or not.
  */
 declare function Say(entity: CBaseEntity | undefined, message: string, teamOnly: boolean): void;
@@ -10290,6 +10530,11 @@ declare function ScreenShake(
     command: 0 | 1,
     airShake: boolean,
 ): void;
+
+/**
+ * RemapValClamped.
+ */
+declare function Script_RemapValClamped(arg1: number, arg2: number, arg3: number, arg4: number, arg5: number): number;
 
 declare function SendOverheadEventMessage(
     sendToPlayer: CDOTAPlayerController | undefined,
