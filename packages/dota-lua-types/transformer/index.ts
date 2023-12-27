@@ -32,13 +32,13 @@ const replaceNode: ts.Visitor = (node) => {
   }
 
   if (Object.prototype.hasOwnProperty.call(enumMembers, nameText)) {
-    return ts.createIdentifier(enumMembers[nameText]);
+    return ts.factory.createIdentifier(enumMembers[nameText]);
   }
 };
 
 const createDotaTransformer = (): ts.TransformerFactory<ts.SourceFile> => (context) => {
   const visit: ts.Visitor = (node) => replaceNode(node) || ts.visitEachChild(node, visit, context);
-  return (file) => ts.visitNode(file, visit);
+  return (file) => ts.visitEachChild(file, visit, context);
 };
 
 export default createDotaTransformer;
