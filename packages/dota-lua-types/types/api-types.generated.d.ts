@@ -274,6 +274,8 @@ declare interface ExecuteOrderFilterEvent {
 
 declare interface HealingFilterEvent {
     entindex_target_const: EntityIndex;
+    entindex_inflictor_const?: EntityIndex;
+    entindex_healer_const?: EntityIndex;
     heal: number;
 }
 
@@ -338,6 +340,7 @@ declare interface ModifierAttackEvent {
     no_attack_cooldown: boolean;
     record: number;
     fail_type: attackfail;
+    report_max?: boolean;
 }
 
 declare interface ModifierInstanceEvent {
