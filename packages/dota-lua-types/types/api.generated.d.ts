@@ -480,8 +480,9 @@ declare interface CBaseEntity extends CEntityInstance {
     TransformPointWorldToEntity(point: Vector): Vector;
     /**
      * Fires off this entity's OnTrigger responses.
+     * Triggers the logic_relay
      */
-    Trigger(): void;
+    Trigger(Activator: CBaseEntity, hCaller: CBaseEntity): void;
     /**
      * Validates the private script scope and creates it if one doesn't exist.
      */
