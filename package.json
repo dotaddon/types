@@ -41,7 +41,7 @@
     "@mobilc/panorama-types": "workspace:*",
     "@mobilc/shared-type": "workspace:*",
     "@mobilc/tsconfig": "workspace:*",
-    "@moddota/dota-data": "^0.40.0",
+    "@moddota/dota-data": "^0.41.0",
     "@types/fs-extra": "^9.0.4",
     "@types/lodash": "^4.14.165",
     "@types/node": "^14.14.7",
