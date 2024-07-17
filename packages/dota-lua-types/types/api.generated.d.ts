@@ -327,11 +327,11 @@ declare interface CBaseEntity extends CEntityInstance {
     /**
      * Is this entity a player controller?
      */
-    IsPlayerController(): boolean;
+    IsPlayerController(): this is CDOTAPlayerController;
     /**
      * Is this entity a player pawn?
      */
-    IsPlayerPawn(): boolean;
+    IsPlayerPawn(): this is CBasePlayerPawn;
     Kill(): void;
     NextMovePeer(): CBaseEntity;
     /**
@@ -3376,6 +3376,12 @@ declare interface CDOTA_Buff {
     IsDebuff(): boolean;
     /** @both */
     IsHexDebuff(): boolean;
+    /**
+     * Has underlying C++ entity object been deleted?
+     *
+     * @both
+     */
+    IsNull(): boolean;
     /** @both */
     IsStunDebuff(): boolean;
     SendBuffRefreshToClients(): void;
@@ -3490,7 +3496,7 @@ declare interface CDOTA_Item extends CDOTABaseAbility {
     /** @both */
     IsInBackpack(): boolean;
     /** @both */
-    IsItem(): boolean;
+    IsItem(): this is CDOTA_Item;
     /** @both */
     IsKillable(): boolean;
     /** @both */
@@ -9689,7 +9695,7 @@ declare function CreateIllusions(
 declare function CreateItem(
     itemName: string,
     owner: CDOTAPlayerController | undefined,
-    purchaser: CDOTAPlayerController | undefined,
+    purchaser: CDOTA_BaseNPC_Hero | undefined,
 ): CDOTA_Item | undefined;
 
 /**
