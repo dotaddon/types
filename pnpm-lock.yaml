@@ -26,8 +26,8 @@ importers:
         specifier: workspace:*
         version: link:packages/tsconfig
       '@moddota/dota-data':
-        specifier: ^0.42.0
-        version: 0.42.0
+        specifier: ^0.43.0
+        version: 0.43.0
       '@types/fs-extra':
         specifier: ^9.0.4
         version: 9.0.13
@@ -695,10 +695,10 @@ packages:
       object-inspect: 1.12.3
     dev: true
 
-  /@moddota/dota-data@0.42.0:
+  /@moddota/dota-data@0.43.0:
     resolution:
       {
-        integrity: sha512-k2sl2eT0Vr1pJPRdaONr3BV0zul1/JjEHyW4OovRlSVp21GrRcdATo6BKyzbAAE/BUvDIp/+DMvRLTAb18NMfw==,
+        integrity: sha512-ZWyaGF4jE+5h6KUrpTEZk0YVRD1I/XtB/YZVEq7A08J1BHPaKYIj8ThuUbQUAdY863OHJSMP4uwVJmSSOvs4Qg==,
       }
     engines: { node: '>=12.13.0' }
     dependencies:
