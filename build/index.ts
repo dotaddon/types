@@ -10,7 +10,7 @@ import { generatedPanorama, generatedPanoramaEnumMappings } from './panorama';
  */
 const writeFile = (packageName: string, generated: Record<string,string>) => Object.entries(generated).map(([_type, content]) => 
   fs.outputFile(
-    path.resolve(__dirname, `../packages/${packageName}/types/${_type}.generated.d.ts`),
+    path.resolve(__dirname, `../packages/dota-types/${packageName}/types/${_type}.generated.d.ts`),
     content,
   ));
 /** 写入数据
@@ -26,8 +26,8 @@ const writeJson = (packageName: string, generated: Record<string,Record<string,s
   );
 
 Promise.all([
-  ...writeFile('dota-lua-types',generatedLua),
-  ...writeFile('panorama-types',generatedPanorama),
+  ...writeFile('vscripts',generatedLua),
+  ...writeFile('panorama',generatedPanorama),
   writeJson('vscripts',generatedLuaEnumMappings),
   writeJson('panorama',generatedPanoramaEnumMappings),
 ]).catch((error) => {

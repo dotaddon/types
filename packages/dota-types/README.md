@@ -23,7 +23,7 @@ npm install -D @mobilc/dota-types
 ```json
 {
   "compilerOptions": {
-    "types": ["@mobilc/dota-types/lua"],
+    "types": ["@mobilc/dota-types/vscripts"],
     "plugins": [{ "transform": "@mobilc/dota-types/transformer/vscripts" }]
   }
 }
