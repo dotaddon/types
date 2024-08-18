@@ -1,6 +1,0 @@
-{
-  "extends": "./lua.json",
-  "compilerOptions": {
-    "types": ["@mobilc/shared-type","@mobilc/dota-lua-types/normalized"]
-  }
-}

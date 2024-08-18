@@ -1,0 +1,9 @@
+{
+  "extends": "./vscripts.json",
+  "compilerOptions": {
+    "types": [
+      "@mobilc/dota-types/share", 
+      "@mobilc/dota-types/vscripts/normalized"
+    ]
+  }
+}

@@ -2,7 +2,10 @@
     "desc": "该目录下放置静态页面与玩家交互逻辑",
     "extends": "./base.json",
     "compilerOptions": {
-        "types": ["@mobilc/shared-type", "@mobilc/panorama-types" ],
+        "types": [
+            "@mobilc/dota-types/share",
+            "@mobilc/dota-types/panorama"
+        ],
         "jsx": "react-jsx",
         "jsxImportSource": "react",
         "downlevelIteration": true,

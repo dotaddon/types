@@ -2,7 +2,10 @@
     "desc": "该目录下放置游戏运行逻辑和触发脚本",
     "extends": "./base.json",
     "compilerOptions": {
-        "types": ["@mobilc/shared-type","@mobilc/dota-lua-types"],
+        "types": [
+            "@mobilc/dota-types/share", 
+            "@mobilc/dota-types/vscripts"
+        ],
         "strictNullChecks": false,
         "strictPropertyInitialization": false
     },
