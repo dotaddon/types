@@ -3,6 +3,7 @@
 TypeScript definitions for Dota 2 Lua API, designed to be used with
 [TypeScriptToLua](https://github.com/TypeScriptToLua/TypeScriptToLua).
 [![npm标签](https://img.shields.io/npm/v/@mobilc/dota-lua-types)](https://www.npmjs.com/package/@mobilc/dota-lua-types)
+[![npm标签](https://img.shields.io/npm/v/@mobilc/panorama-types)](https://www.npmjs.com/package/@mobilc/panorama-types)
 
 ## Installation
 
@@ -12,9 +13,9 @@ TypeScript definitions for Dota 2 Lua API, designed to be used with
 1. Get package from npm
 
 ```shell
-pnpm add -D @mobilc/dota-lua-types
+pnpm add -D @mobilc/dota-types
 # or
-npm install -D @mobilc/dota-lua-types
+npm install -D @mobilc/dota-types
 ```
 
 2. Modify your `tsconfig.json`
@@ -22,26 +23,48 @@ npm install -D @mobilc/dota-lua-types
 ```json
 {
   "compilerOptions": {
-    "types": ["@mobilc/dota-lua-types"],
-    "plugins": [{ "transform": "@mobilc/dota-lua-types/transformer" }]
+    "types": ["@mobilc/dota-types/lua"],
+    "plugins": [{ "transform": "@mobilc/dota-types/lua/transformer" }]
   }
 }
 ```
 
+```json
+{
+  "compilerOptions": {
+    "types": ["@mobilc/dota-types/panorama"],
+    "plugins": [{ "transform": "@mobilc/dota-types/panorama/transformer" }]
+  }
+}
+```
+
+
+```json
+{
+  "compilerOptions": {
+    "types": ["@mobilc/dota-types/share"]
+  }
+}
+```
 ## Enums
 
-This package includes 2 versions of enum types - raw and normalized. Raw types are included with
-`"types": ["@mobilc/dota-lua-types"]`. They are defined using original engine names and have no structural
-changes. This makes the code using some enums compatible with Panorama, however it leads to
-repetition and requires you to use inconsistent standard names.
+This package includes 2 versions of enum types - raw and normalized. Raw types are included by
+default, with `"types": ["@mobilc/dota-types/panorama"]`. They are defined using original engine names and have no structural
+changes. They match actual values available at runtime,This makes the code using some enums compatible with Panorama however
+lead to repetition and require you to use inconsistent standard names.
 
-Normalized enum types can be included with `"types": ["@mobilc/dota-lua-types/normalized"]`. With these
-types, enums have consistent names and have no repeated parts. For example, instead of
+Normalized enum types can be included with `"types": ["@mobilc/dota-types/panorama/normalized"]` and require you
+to use `@mobilc/dota-types/panorama/transformer` (for example using [ttypescript]). With these types, enums have
+consistent names and have no repeated parts. For example, instead of
+`EDOTA_ModifyGold_Reason.DOTA_ModifyGold_Unspecified` you have to write
+`ModifyGoldReason.UNSPECIFIED`. instead of
 `EDOTA_ModifyGold_Reason.DOTA_ModifyGold_Unspecified` you have to write
 `ModifyGoldReason.UNSPECIFIED`.
 
 Both type versions define aliases for alternative names, so libraries created with one version would
 be compatible with a different one.
+
+[ttypescript]: https://github.com/cevek/ttypescript
 
 ## Notes
 

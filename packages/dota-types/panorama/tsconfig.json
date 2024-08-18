@@ -4,6 +4,6 @@
   "compilerOptions": {
     "noEmit": true,
     "lib": ["es2017"],
-    "types": ["@mobilc/shared-type"],
+    "types": ["../share"],
   }
 }
