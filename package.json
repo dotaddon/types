@@ -36,10 +36,8 @@
   },
   "devDependencies": {
     "@ark120202/eslint-config": "^2.5.0",
-    "@mobilc/dota-lua-types": "workspace:*",
+    "@mobilc/dota-types": "workspace:*",
     "@mobilc/panorama-polyfill": "^0.0.5",
-    "@mobilc/panorama-types": "workspace:*",
-    "@mobilc/shared-type": "workspace:*",
     "@mobilc/tsconfig": "workspace:*",
     "@moddota/dota-data": "^0.43.0",
     "@types/fs-extra": "^9.0.4",
