@@ -24,7 +24,7 @@ npm install -D @mobilc/dota-types
 {
   "compilerOptions": {
     "types": ["@mobilc/dota-types/lua"],
-    "plugins": [{ "transform": "@mobilc/dota-types/lua/transformer" }]
+    "plugins": [{ "transform": "@mobilc/dota-types/transformer/vscripts" }]
   }
 }
 ```
@@ -33,7 +33,7 @@ npm install -D @mobilc/dota-types
 {
   "compilerOptions": {
     "types": ["@mobilc/dota-types/panorama"],
-    "plugins": [{ "transform": "@mobilc/dota-types/panorama/transformer" }]
+    "plugins": [{ "transform": "@mobilc/dota-types/transformer/panorama" }]
   }
 }
 ```
@@ -54,7 +54,7 @@ changes. They match actual values available at runtime,This makes the code using
 lead to repetition and require you to use inconsistent standard names.
 
 Normalized enum types can be included with `"types": ["@mobilc/dota-types/panorama/normalized"]` and require you
-to use `@mobilc/dota-types/panorama/transformer` (for example using [ttypescript]). With these types, enums have
+to use `@mobilc/dota-types/transformer/panorama` (for example using [ttypescript]). With these types, enums have
 consistent names and have no repeated parts. For example, instead of
 `EDOTA_ModifyGold_Reason.DOTA_ModifyGold_Unspecified` you have to write
 `ModifyGoldReason.UNSPECIFIED`. instead of

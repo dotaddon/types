@@ -20,7 +20,7 @@ const writeFile = (packageName: string, generated: Record<string,string>) => Obj
  */
 const writeJson = (packageName: string, generated: Record<string,Record<string,string>>) =>
   fs.outputJson(
-    path.resolve(__dirname, `../packages/${packageName}/transformer/mappings.json`),
+    path.resolve(__dirname, `../packages/dota-types/transformer/${packageName}-mappings.json`),
     generated,
     { spaces: 4 },
   );
@@ -28,8 +28,8 @@ const writeJson = (packageName: string, generated: Record<string,Record<string,s
 Promise.all([
   ...writeFile('dota-lua-types',generatedLua),
   ...writeFile('panorama-types',generatedPanorama),
-  writeJson('dota-lua-types',generatedLuaEnumMappings),
-  writeJson('panorama-types',generatedPanoramaEnumMappings),
+  writeJson('vscripts',generatedLuaEnumMappings),
+  writeJson('panorama',generatedPanoramaEnumMappings),
 ]).catch((error) => {
   console.error(error);
   process.exit(1);

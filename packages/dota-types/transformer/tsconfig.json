@@ -1,5 +1,4 @@
 {
-  "files": ["index.ts"],
   "compilerOptions": {
     "moduleResolution": "node",
     "composite": true,

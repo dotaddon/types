@@ -1,5 +1,5 @@
 node_modules
 *.tsbuildinfo
-/packages/dota-types/*/transformer/*
-!/packages/dota-types/*/transformer/index.ts
-!/packages/dota-types/*/transformer/tsconfig.json
+/packages/dota-types/transformer/*
+!/packages/dota-types/transformer/*.ts
+!/packages/dota-types/transformer/tsconfig.json
