@@ -327,11 +327,11 @@ declare interface CBaseEntity extends CEntityInstance {
     /**
      * Is this entity a player controller?
      */
-    IsPlayerController(): boolean;
+    IsPlayerController(): this is CDOTAPlayerController;
     /**
      * Is this entity a player pawn?
      */
-    IsPlayerPawn(): boolean;
+    IsPlayerPawn(): this is CBasePlayerPawn;
     Kill(): void;
     NextMovePeer(): CBaseEntity;
     /**
@@ -562,10 +562,6 @@ declare interface CBaseModelEntity extends CBaseEntity {
      * Sets a bodygroup by name.
      */
     SetBodygroupByName(name: string, value: number): void;
-    /**
-     * Sets the light group of the entity.
-     */
-    SetLightGroup(lightGroup: string): void;
     /**
      * Set the material group of this entity.
      */
@@ -1635,21 +1631,6 @@ declare interface CDOTA_Ability_Nian_Roar extends CDOTABaseAbility {
     __kind__: 'instance';
 }
 
-declare const CDOTA_AghsFort_Ability_ArcWardenBoss_TempestDouble: DotaConstructor<CDOTA_AghsFort_Ability_ArcWardenBoss_TempestDouble>;
-
-/** @client */
-declare const C_DOTA_AghsFort_Ability_ArcWardenBoss_TempestDouble: typeof CDOTA_AghsFort_Ability_ArcWardenBoss_TempestDouble;
-
-declare interface CDOTA_AghsFort_Ability_ArcWardenBoss_TempestDouble extends CDOTABaseAbility {
-    /**
-     * Sets the number of doubles to spawn.
-     *
-     * @both
-     */
-    SetNumDoubles(doubles: number): void;
-    __kind__: 'instance';
-}
-
 declare const CDOTA_BaseNPC: DotaConstructor<CDOTA_BaseNPC>;
 
 /** @client */
@@ -1731,6 +1712,11 @@ declare interface CDOTA_BaseNPC extends CBaseFlex {
      * Clear Activity modifiers.
      */
     ClearActivityModifiers(): void;
+    /**
+     * Consume the item, deleting it from the inventory and granting the hero the
+     * specified bonuses.
+     */
+    ConsumeItem(item: object): void;
     DestroyAllSpeechBubbles(): void;
     /**
      * Disassemble the passed item in this unit's inventory.
@@ -2919,6 +2905,10 @@ declare interface CDOTA_BaseNPC_Creature extends CDOTA_BaseNPC {
      */
     SetDisableResistanceGain(disableResistanceGain: number): void;
     /**
+     * Switches visible econ item group.
+     */
+    SetEconItemGroup(group: number): void;
+    /**
      * Set the hit points gained per level on this creature.
      */
     SetHPGain(hpGain: number): void;
@@ -3030,7 +3020,7 @@ declare interface CDOTA_BaseNPC_Hero extends CDOTA_BaseNPC {
     /**
      * Return integer value for the gold cost of a buyback.
      */
-    GetBuybackCost(returnOldValues: boolean): number;
+    GetBuybackCost(): number;
     /**
      * Returns the amount of time gold gain is limited after buying back.
      */
@@ -3053,13 +3043,15 @@ declare interface CDOTA_BaseNPC_Hero extends CDOTA_BaseNPC {
      */
     GetGold(): number;
     GetGoldBounty(): number;
+    /** @both */
+    GetHeroFacetID(): number;
     GetHeroID(): number;
     /**
      * Hero attack speed is also affected by agility.
      */
     GetIncreasedAttackSpeed(ignoreTempAttackSpeed: boolean): number;
     /** @both */
-    GetIntellect(): number;
+    GetIntellect(skipNoConsume: boolean): number;
     GetIntellectGain(): number;
     /**
      * Value is stored in PlayerResource.
@@ -3381,6 +3373,12 @@ declare interface CDOTA_Buff {
     IsDebuff(): boolean;
     /** @both */
     IsHexDebuff(): boolean;
+    /**
+     * Has underlying C++ entity object been deleted?
+     *
+     * @both
+     */
+    IsNull(): boolean;
     /** @both */
     IsStunDebuff(): boolean;
     SendBuffRefreshToClients(): void;
@@ -3493,7 +3491,7 @@ declare interface CDOTA_Item extends CDOTABaseAbility {
     /** @both */
     IsInBackpack(): boolean;
     /** @both */
-    IsItem(): boolean;
+    IsItem(): this is CDOTA_Item;
     /** @both */
     IsKillable(): boolean;
     /** @both */
@@ -3572,7 +3570,7 @@ declare interface CDOTA_Item extends CDOTABaseAbility {
     SetSellable(sellable: boolean): void;
     SetShareability(shareability: EShareAbility): void;
     SetStacksWithOtherOwners(stacksWithOtherOwners: boolean): void;
-    SpendCharge(): void;
+    SpendCharge(delayRemove: number): void;
     StacksWithOtherOwners(): boolean;
     /**
      * Think this item.
@@ -3923,9 +3921,17 @@ declare interface CDOTA_Item_Physical extends CBaseAnimatingActivity {
      */
     GetCreationTime(): number;
     /**
+     * Is this drop flagged as a loot drop?
+     */
+    IsLoot(): boolean;
+    /**
      * Set the contained item.
      */
     SetContainedItem(item: CDOTA_Item): void;
+    /**
+     * Set if this drop is flagged as a loot drop.
+     */
+    SetIsLoot(isLoot: boolean): void;
     __kind__: 'instance';
 }
 
@@ -4252,6 +4258,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetBaseAttackPostBonus?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetBonusDayVision?(): number;
     /**
      * @abstract
@@ -4287,6 +4298,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetDisableManaGain?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetFixedDayVision?(): number;
     /**
      * @abstract
@@ -4307,6 +4323,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetMagicalArmorPiercingPercentageTarget?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetMinHealth?(): number;
     /**
      * @abstract
@@ -4317,12 +4338,32 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierAbilityPoints?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierAdditionalNutralItemDrops?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierAoEBonusConstant?(): void;
     /**
      * @abstract
      * @both
      */
+    GetModifierAoEBonusConstantStacking?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierAoEBonusPercentage?(): number;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierAttackHeightBonus?(): void;
     /**
      * @abstract
      * @both
@@ -4353,6 +4394,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @both
      */
     GetModifierAttackSpeed_Limit?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierAttackSpeedAbsoluteMax?(): void;
     /**
      * @abstract
      * @both
@@ -4427,12 +4473,52 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierBecomeAgility?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierBecomeIntelligence?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierBecomeStrength?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierBecomeUniversal?(): 0 | 1;
     /**
      * @abstract
      * @both
      */
     GetModifierBonusDamageOutgoing_Percentage?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierBonusLotusHeal?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierBonusLotusHeal?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierBonusLotusHeal?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierBonusLotusHeal?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierBonusLotusHeal?(): void;
     /**
      * @abstract
      * @both
@@ -4463,6 +4549,16 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @both
      */
     GetModifierBonusStats_Strength_Percentage?(): number;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierBonusUphillMissChance?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierBuybackPenaltyPercent?(): void;
     /**
      * @abstract
      * @both
@@ -4522,7 +4618,27 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierConvertManaCostToHealthCost?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierCooldownReduction_Constant?(event: ModifierAbilityEvent): number;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierCreateBonusIllusionChance?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierCreateBonusIllusionCount?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierCreepDenyPercent?(): void;
     /**
      * @abstract
      * @both
@@ -4552,12 +4668,12 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetModifierDodgeProjectile?(): 0 | 1;
+    GetModifierDisassembleAnything?(): void;
     /**
      * @abstract
      * @both
      */
-    GetModifierDoNotSinkAfterDeath?(): void;
+    GetModifierDodgeProjectile?(): 0 | 1;
     /**
      * @abstract
      * @both
@@ -4602,7 +4718,27 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierFixedManaRegen?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierForceMaxHealth?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierForceMaxMana?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierFoWTeam?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierHasBonusNeutralItemChoice?(): void;
     /**
      * @abstract
      * @both
@@ -4644,12 +4780,22 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierHeroFacetOverride?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierHPRegen_CanBeNegative?(): void;
     /**
      * @abstract
      * @both
      */
     GetModifierHPRegenAmplify_Percentage?(): number;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierHPRegenMultiplierPreAmplification?(): void;
     /**
      * @abstract
      * @both
@@ -4716,6 +4862,16 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierInnateDamageBlockPctOverride?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierInventorySlotRestricted?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierInvisibilityAttackBehaviorException?(): void;
     /**
      * @abstract
@@ -4726,7 +4882,17 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetModifierIsRatPack?(): void;
+    GetModifierIsPackRat?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierItemSellbackCost?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierKillStreakBonusGoldPercentage?(): void;
     /**
      * @abstract
      * @both
@@ -4807,6 +4973,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @both
      */
     GetModifierMiss_Percentage?(): number;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierMiss_Percentage_Target?(): void;
     /**
      * @abstract
      * @both
@@ -4918,6 +5089,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierNoFreeTPScrollOnDeath?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierNoVisionOfAttacker?(): void;
     /**
      * @abstract
@@ -4959,6 +5135,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @both
      */
     GetModifierPercentageCooldownStacking?(event: ModifierAbilityEvent): number;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierPercentageDeathGoldCost?(): void;
     /**
      * @abstract
      * @both
@@ -5150,6 +5331,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierProjectileSpeedTarget?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierPropetyFailAttack?(): void;
     /**
      * @abstract
@@ -5179,7 +5365,17 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetModifierSlowResistance?(): number;
+    GetModifierShareXPRune?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierSlowResistance_Stacking?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GEtModifierSlowResistance_Unique?(): void;
     /**
      * @abstract
      * @both
@@ -5190,6 +5386,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @both
      */
     GetModifierSpellAmplify_PercentageCreep?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    GetModifierSpellAmplify_PercentageTarget?(): void;
     /**
      * @abstract
      * @both
@@ -5269,6 +5470,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModifierTotal_ConstantBlockStacking?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetModifierTotalDamageOutgoing_Percentage?(event: ModifierAttackEvent): number;
     /**
      * @abstract
@@ -5309,6 +5515,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetModofierPropertyPseudoRandomBonus?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetOverrideAnimation?(): GameActivity_t;
     /**
      * @abstract
@@ -5319,12 +5530,12 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
-    GetOverrideAnimationWeight?(): number;
+    GetOverrideAttackMagical?(): 0 | 1;
     /**
      * @abstract
      * @both
      */
-    GetOverrideAttackMagical?(): 0 | 1;
+    GetPhysicalArmorPiercingPercentageTarget?(): void;
     /**
      * @abstract
      * @both
@@ -5334,7 +5545,17 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetRedirectSpell?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetReflectSpell?(event: ModifierAbilityEvent): 0 | 1;
+    /**
+     * @abstract
+     * @both
+     */
+    GetSkipAttackRegulator?(): void;
     /**
      * @abstract
      * @both
@@ -5344,7 +5565,17 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetSuppressCrit?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetSuppressTeleport?(): 0 | 1;
+    /**
+     * @abstract
+     * @both
+     */
+    GetTierTokenReroll?(): void;
     /**
      * @abstract
      * @both
@@ -5359,12 +5590,22 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    GetVisionDegreeRestriction?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     GetVisualZDelta?(): number;
     /**
      * @abstract
      * @both
      */
     GetVisualZSpeedBaseOverride?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    MinAttributeLevel?(): void;
     /**
      * @abstract
      * @both
@@ -5466,6 +5707,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    OnCleaveAttackLanded?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     OnDamageCalculated?(event: ModifierAttackEvent): void;
     /**
      * @abstract
@@ -5477,6 +5723,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @both
      */
     OnDamagePrevented?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    OnDayStarted?(): void;
     /**
      * @abstract
      * @both
@@ -5511,6 +5762,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    OnHeroBeginDying?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     OnHeroKilled?(event: ModifierAttackEvent): void;
     /**
      * @abstract
@@ -5537,6 +5793,16 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @both
      */
     OnModifierAdded?(event: ModifierAddedEvent): void;
+    /**
+     * @abstract
+     * @both
+     */
+    OnModifierRemoved?(): void;
+    /**
+     * @abstract
+     * @both
+     */
+    OnMuteDamageAbilities?(): void;
     /**
      * @abstract
      * @both
@@ -5611,6 +5877,11 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    OnTakeDamagePostUnavoidableBlock?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     OnTeleported?(event: ModifierUnitEvent): void;
     /**
      * @abstract
@@ -5621,12 +5892,22 @@ declare interface CDOTA_Modifier_Lua extends CDOTA_Buff {
      * @abstract
      * @both
      */
+    OnTierTokenRerolled?(): void;
+    /**
+     * @abstract
+     * @both
+     */
     OnTooltip?(): number;
     /**
      * @abstract
      * @both
      */
     OnTooltip2?(): number;
+    /**
+     * @abstract
+     * @both
+     */
+    OnTreeCutDown?(): void;
     /**
      * @abstract
      * @both
@@ -6025,6 +6306,10 @@ declare const CDOTA_Unit_Courier: DotaConstructor<CDOTA_Unit_Courier>;
 
 declare interface CDOTA_Unit_Courier extends CDOTA_BaseNPC {
     /**
+     * Respawn the courier.
+     */
+    RespawnCourier(): void;
+    /**
      * Upgrade the courier ( int param ) times.
      */
     UpgradeCourier(level: number): void;
@@ -6052,17 +6337,6 @@ declare interface CDOTA_Unit_CustomGameAnnouncerAghanim extends CDOTA_BaseNPC {
      * Determines whether response criteria is matched on server or client.
      */
     SetServerAuthoritative(isServerAuthoritative: boolean): void;
-    __kind__: 'instance';
-}
-
-declare const CDOTA_Unit_Diretide_Portal: DotaConstructor<CDOTA_Unit_Diretide_Portal>;
-
-declare interface CDOTA_Unit_Diretide_Portal extends CDOTA_BaseNPC_Building {
-    GetPartnerPortal(): object;
-    ResetPortal(): void;
-    SetInvasionRuneType(runeType: number): void;
-    SetPartnerPortal(portal: object): void;
-    SetPortalActive(active: boolean): void;
     __kind__: 'instance';
 }
 
@@ -6876,6 +7150,7 @@ declare interface CDOTABaseGameMode extends CBaseEntity {
      * Use to disable gold loss on death.
      */
     SetLoseGoldOnDeath(enabled: boolean): void;
+    SetLuaGameMode(script: object): void;
     /**
      * Set the maximum attack speed for units.
      */
@@ -8962,6 +9237,7 @@ declare interface CTakeDamageInfo {
     GetInflictor(): object;
     GetOriginalDamage(): number;
     GetReportedPosition(): Vector;
+    GetTotalledDamage(): number;
     HasDamageType(bitsToTest: number): boolean;
     ScaleDamage(scaleAmount: number): void;
     SetAmmoType(ammoType: number): void;
@@ -9486,7 +9762,7 @@ declare function CreateIllusions(
 declare function CreateItem(
     itemName: string,
     owner: CDOTAPlayerController | undefined,
-    purchaser: CDOTAPlayerController | undefined,
+    purchaser: CDOTA_BaseNPC_Hero | undefined,
 ): CDOTA_Item | undefined;
 
 /**
@@ -9631,6 +9907,19 @@ declare function cvar_setf(arg1: string, arg2: number): boolean;
  * @both
  */
 declare function DebugBreak(): void;
+
+/**
+ * Creates a unit with a specified hero variant, controllable by the specified
+ * player.
+ */
+declare function DebugCreateHeroWithVariant(
+    arg1: object,
+    arg2: string,
+    arg3: number,
+    arg4: number,
+    arg5: boolean,
+    arg6: object,
+): number;
 
 /**
  * Creates a test unit controllable by the specified player.
