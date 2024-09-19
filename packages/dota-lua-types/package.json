@@ -1,6 +1,6 @@
 {
   "name": "@cabin-icarus/dota-lua-types",
-  "version": "4.32.0",
+  "version": "4.32.1",
   "description": "TypeScript definitions for Dota 2 Lua API",
   "keywords": [
     "dota",
