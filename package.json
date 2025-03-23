@@ -39,7 +39,7 @@
     "@mobilc/dota-types": "workspace:*",
     "@mobilc/panorama-polyfill": "^0.0.5",
     "@mobilc/tsconfig": "workspace:*",
-    "@moddota/dota-data": "^0.43.0",
+    "@moddota/dota-data": "^0.44.0",
     "@types/fs-extra": "^9.0.4",
     "@types/lodash": "^4.14.165",
     "@types/node": "^20.14.8",
