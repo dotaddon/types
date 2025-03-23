@@ -1,4 +1,4 @@
 {
-  "extends": "@mobilc/tsconfig/lua-normalized.json",
+  "extends": "@mobilc/tsconfig/vscripts-normalized.json",
   "include": ["**/*", "../utils.d.ts"],
 }
