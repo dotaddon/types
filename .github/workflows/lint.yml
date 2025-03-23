@@ -1,11 +1,10 @@
-name: Publish Lua types
-on:
-  workflow_dispatch:
-  push:
-    tags: 'dota-lua-types@*'
+name: CI
+
+on: [push, pull_request]
 
 jobs:
-  build:
+  main:
+    name: Main
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -20,9 +19,9 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@mobilc'
           cache: 'pnpm'
-      - run: pnpm ci
+    steps:
+      - run: pnpm install --frozen-lockfile
       - run: pnpm build
-      - run: pnpm publish
-        working-directory: packages/dota-lua-types
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTOMATION_TOKEN }}
+      - run: pnpm check-generated
+      - run: pnpm test
+      - run: pnpm lint

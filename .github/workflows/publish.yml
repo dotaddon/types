@@ -1,10 +1,11 @@
-name: CI
-
-on: [push, pull_request]
+name: Publish types
+on:
+  workflow_dispatch:
+  push:
+    tags: 'dota-types@*'
 
 jobs:
-  main:
-    name: Main
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -19,9 +20,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@mobilc'
           cache: 'pnpm'
-    steps:
-      - run: pnpm ci
+      - run: pnpm install --frozen-lockfile
       - run: pnpm build
-      - run: pnpm check-generated
-      - run: pnpm test
-      - run: pnpm lint
+      - run: pnpm publish packages/panorama-types --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTOMATION_TOKEN }}

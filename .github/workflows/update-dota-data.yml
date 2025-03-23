@@ -1,0 +1,45 @@
+name: Update @moddota/dota-data
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天运行一次
+  workflow_dispatch:     # 允许手动触发
+
+jobs:
+  update-dependency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.18.0'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Check for updates
+        id: check
+        run: |
+          CURRENT_VERSION=$(node -p "require('./package.json').devDependencies['@moddota/dota-data']")
+          LATEST_VERSION=$(npm view @moddota/dota-data version)
+          echo "Current version: $CURRENT_VERSION"
+          echo "Latest version: $LATEST_VERSION"
+          if [ "$CURRENT_VERSION" != "^$LATEST_VERSION" ]; then
+            echo "update_needed=true" >> $GITHUB_OUTPUT
+            echo "new_version=$LATEST_VERSION" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create branch and update dependency
+        if: steps.check.outputs.update_needed == 'true'
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -b dota-data
+          pnpm add -D @moddota/dota-data@${{ steps.check.outputs.new_version }}
+          git add package.json pnpm-lock.yaml
+          git commit -m "chore: update @moddota/dota-data to ${{ steps.check.outputs.new_version }}"
+          git push -f origin dota-data

@@ -16,9 +16,7 @@
     "lint": "run-s lint:*",
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier --check .",
-    "test": "tsc -b test",
-    "bump:lua-types": "ts-node scripts/bump-version.ts packages/dota-lua-types",
-    "bump:panorama-types": "ts-node scripts/bump-version.ts packages/panorama-types"
+    "test": "tsc -b test"
   },
   "prettier": {
     "printWidth": 100,
