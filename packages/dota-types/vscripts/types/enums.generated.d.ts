@@ -780,7 +780,7 @@ declare enum DOTACustomCameraEventFlags_t {
 }
 
 /**
- * @deprecated Normalized enum name. Defined only for library compatibility.
+ * @deprecated 规范的枚举名称。仅为库兼容性而定义。
  */
 type DamageFlag = DOTADamageFlag_t;
 
