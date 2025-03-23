@@ -4,7 +4,7 @@
     "tasks": [
         {
             "label": "编译",
-            "command": "lerna run build",
+            "command": "pnpm build",
         },
         {
             "label": "发布",

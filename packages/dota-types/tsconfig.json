@@ -1,0 +1,14 @@
+{
+    "files": [],
+    "references": [
+        {
+            "path": "./panorama/tsconfig.json"
+        },
+        {
+            "path": "./vscripts/tsconfig.json"
+        },
+        {
+            "path": "./transformer/tsconfig.json"
+        }
+    ]
+}

@@ -13,8 +13,9 @@
   "author": "西索酱",
   "files": [
     "**/*.d.ts",
+    "tsconfig.*",
     "**/transformer/mappings.json",
-    "**/transformer/index.{js,d.ts}"
+    "**/transformer/*.{js,d.ts}"
   ],
   "dependencies": {
     "lua-types": "^2.13.1",

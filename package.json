@@ -7,11 +7,11 @@
   ],
   "scripts": {
     "build": "run-p build:*",
-    "build:tsc": "tsc -b packages",
+    "build:tsc": "tsc -b packages/dota-types",
     "build:types": "tsx build",
     "check-generated": "node scripts/check-generated.js",
     "dev": "run-p dev:*",
-    "dev:tsc": "tsc -b packages --watch",
+    "dev:tsc": "tsc -b packages/dota-types --watch",
     "dev:types": "nodemon",
     "lint": "run-s lint:*",
     "lint:eslint": "eslint .",
