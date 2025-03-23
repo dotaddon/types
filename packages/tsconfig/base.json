@@ -6,6 +6,8 @@
         "strict": false,
         "resolveJsonModule": true,
         "experimentalDecorators": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "preserveConstEnums": true,
+        "isolatedModules": false
     }
 }
